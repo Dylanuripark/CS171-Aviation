@@ -1,7 +1,9 @@
+let parseDate = d3.timeParse("%Y");
+
 
 let delayData
 d3.csv("data/Airline_Delay_cause.csv", row => {
-    row.year  = +row.year;
+    row.year  = parseDate(row.year);
     row.month = +row.month;
     row.arr_flights = +row.arr_flights;
     row.arr_del15 = +row.arr_del15;
