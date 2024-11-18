@@ -1,3 +1,25 @@
+Promise.all([
+    d3.json("data/us-states.json"),
+    d3.csv("data/usa-airports.csv", row => {
+        return {
+            iata: row.iata,
+            name: row.name,
+            city: row.city,
+            state: row.state,
+            latitude: +row.latitude,
+            longitude: +row.longitude
+        };
+    })
+]).then(([usMapData, airportData]) => {
+    // Initialize the map visualization
+    new FlightsMap("flightMap", airportData, usMapData);
+}).catch(error => {
+    console.error('Error loading data:', error);
+});
+
+
+
+
 let parseDate = d3.timeParse("%Y");
 
 
