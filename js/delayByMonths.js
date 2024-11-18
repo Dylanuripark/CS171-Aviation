@@ -28,11 +28,17 @@ class delayByMonths {
 
         vis.xScale = d3.scalePoint()
             .domain(d3.range(1,13))
-            .range([0,vis.width])
-            .padding(0.5)
+            .range([vis.margin.left,vis.width])
 
         vis.yScale = d3.scaleLinear()
-            .range([vis.height,0])
+            .range([vis.height,vis.margin.top])
+
+        vis.svg.append('g')
+            .attr('class', 'title bar-title')
+            .append('text')
+            .text("Average Delay by Month (Minutes)")
+            .attr('transform', `translate(${vis.width / 2}, 20)`)
+            .attr('text-anchor', 'middle');
 
 
         vis.wrangleData();
