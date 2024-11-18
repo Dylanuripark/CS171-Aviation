@@ -124,7 +124,7 @@ class delayByMonths {
                 .tickFormat(d => monthNames[d - 1]));
 
         vis.svg.select(".y-axis")
-            .attr("transform", `translate(${vis.margin.left}, ${vis.margin.top})`)
+            .attr("transform", `translate(${vis.margin.left}, 0)`)
             .call(d3.axisLeft(vis.yScale));
 
     }
