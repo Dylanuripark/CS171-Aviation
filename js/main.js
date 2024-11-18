@@ -23,7 +23,25 @@ d3.csv("data/Airline_Delay_cause.csv", row => {
     return row
 }).then(csv => {
     delayData = csv
-    delayByMonthsVis = new delayByMonths('delaybyMonths', delayData);
+    // delayByMonthsVis = new delayByMonths('delaybyMonths', delayData);
+})
+
+let avgDelayData
+d3.csv("data/avg_delays.csv", row => {
+    row.arr_delay = +row.arr_delay;
+    row.arr_flights = +row.arr_flights;
+    row.avg_delay = +row.avg_delay;
+    return row
+}).then(csv => {
+    avgDelayData = csv
+    let histData
+    d3.csv("data/hist.csv", row => {
+        row.count = +row.count;
+        return row
+    }).then(csv => {
+        histData = csv
+        delayDistVis = new delayDist('delayDist', avgDelayData, histData);
+    })
 })
 
 
