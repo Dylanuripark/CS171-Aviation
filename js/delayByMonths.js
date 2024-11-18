@@ -28,11 +28,17 @@ class delayByMonths {
 
         vis.xScale = d3.scalePoint()
             .domain(d3.range(1,13))
-            .range([0,vis.width])
-            .padding(0.5)
+            .range([vis.margin.left,vis.width])
 
         vis.yScale = d3.scaleLinear()
-            .range([vis.height,0])
+            .range([vis.height,vis.margin.top])
+
+        vis.svg.append('g')
+            .attr('class', 'title bar-title')
+            .append('text')
+            .text("Average Delay by Month (Minutes)")
+            .attr('transform', `translate(${vis.width / 2}, 20)`)
+            .attr('text-anchor', 'middle');
 
 
         vis.wrangleData();
@@ -91,6 +97,11 @@ class delayByMonths {
                 }
             )
         })
+
+        // Might imagine that there is some option to filter or maybe a brush here to look at specific months (brush is a little awkward since it's not continuous)
+        // Filter might be something that changes all the visualizations. Potentially some filtering by airline or filtering by a specific kind of arrival delay
+        // Space here to also potentially change from line graph as it currently is to a stacked chart where each kind of delay is calculated and placed within
+        // (Might not work as well for averages)
 
         vis.updateVis();
     }
