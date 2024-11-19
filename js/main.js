@@ -1,3 +1,18 @@
+// instantiate the scrollama
+const scroller = scrollama();
+
+// setup the instance, pass callback functions
+scroller
+    .setup({
+        step: ".step",
+    })
+    .onStepEnter((response) => {
+        // { element, index, direction }
+    })
+    .onStepExit((response) => {
+        // { element, index, direction }
+    });
+
 Promise.all([
     d3.json("data/us-states.json"),
     d3.csv("data/usa-airports.csv", row => {
