@@ -1,3 +1,13 @@
+body {
+    font-family: Doto;
+    background-color: #293241;
+    color: white;
+}
+
+.title text {
+    fill: white;
+}
+
 .tooltip {
     position: absolute;
     text-align: left;
