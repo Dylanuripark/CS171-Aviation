@@ -11,12 +11,7 @@ class delayDist {
         this.parentElement = _parentElement;
         this.delays = _avgDelayData;
         this.hist = _histData;
-        this.filteredData = this.delays.filter(function(d) {
-            return d.airport == "ATL";
-        });
-        this.filteredData = this.filteredData.filter(function(d) {
-            return d.carrier_name == "Delta Air Lines Network";
-        });
+        this.filteredData = this.delays;
 
         this.initVis();
     }
@@ -29,7 +24,7 @@ class delayDist {
     initVis() {
         let vis = this;
 
-        vis.margin = { top: 20, right: 20, bottom: 200, left: 60 };
+        vis.margin = { top: 20, right: 20, bottom: 50, left: 80 };
 
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right,
             vis.height = 500 - vis.margin.top - vis.margin.bottom;
@@ -59,8 +54,8 @@ class delayDist {
         vis.xAxis = d3.axisBottom()
             .scale(vis.x);
 
-        // vis.yAxis = d3.axisLeft()
-        //     .scale(vis.y);
+        vis.yAxis = d3.axisLeft()
+            .scale(vis.y);
 
 
         // // Append a path for the area function, so that it is later behind the brush overlay
@@ -98,18 +93,47 @@ class delayDist {
             .attr("class", "x-axis axis")
             .attr("transform", "translate(0," + vis.height + ")");
 
-        // vis.svg.append("g")
-        //     .attr("class", "y-axis axis");
+        vis.svg.append("g")
+            .attr("class", "y-axis axis");
+
+        // Call axis functions
+        vis.svg.select(".x-axis").call(vis.xAxis);
+        vis.svg.select(".y-axis").call(vis.yAxis);
 
         // Axis titles
-        // vis.svg.append("text")
-        //     .attr("x", -50)
-        //     .attr("y", -8)
-        //     .text("Votes");
         vis.svg.append("text")
-            .attr("x", vis.width / 2 - 20)
+            .attr("class", "axis-text")
+            .attr("x", -vis.height / 2)
+            .attr("y", -50)
+            .style("transform", "rotate(-90deg)")
+            .style("text-anchor", "middle")
+            .text("Number of airport-airline combinations");
+        vis.svg.append("text")
+            .attr("class", "axis-text")
+            .attr("x", vis.width / 2)
             .attr("y", vis.height + 40)
+            .style("text-anchor", "middle")
             .text("Average delay (min)");
+
+        // Append rectangle and error message in case of error
+        vis.svg.append("rect")
+            .attr("class", "graph-error")
+            .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
+            .attr("width", vis.width + vis.margin.left + vis.margin.right)
+            .attr("x", -vis.margin.left)
+            .attr("y", -vis.margin.top)
+            .style("fill", "#293241")
+            .style("opacity", 0)
+
+        vis.svg.append("text")
+            .attr("class", "graph-error")
+            .style("text-anchor", "middle")
+            .attr("x", vis.width / 2)
+            .attr("y", vis.height / 2)
+            .text("No flights found for this combination")
+            .style("font-size", "2em")
+            .style("fill", "white")
+            .style("opacity", 0)
 
 
         // (Filter, aggregate, modify data)
@@ -125,6 +149,13 @@ class delayDist {
     wrangleData() {
         let vis = this;
 
+        let selectedAirport = document.getElementById("airportChoice").value;
+        let selectedAirline = document.getElementById("airlineChoice").value;
+        let avg_delay = vis.filteredData.reduce((acc, item) => acc + item.arr_delay, 0) /
+            vis.filteredData.reduce((acc, item) => acc + item.arr_flights, 0)
+        vis.filteredDelay = [{avg_delay: avg_delay}];
+        console.log(vis.filteredDelay);
+
         // Update the visualization
         vis.updateVis();
     }
@@ -138,8 +169,11 @@ class delayDist {
     updateVis() {
         let vis = this;
 
+        vis.svg.selectAll(".graph-error")
+            .style("opacity", 0)
+
         let indicator = vis.svg.selectAll(".indicator")
-            .data(this.filteredData);
+            .data(this.filteredDelay);
 
         indicator.enter().append("line")
             .attr("class", "indicator")
@@ -154,13 +188,10 @@ class delayDist {
             })
             .attr("x2", function (d) {
                 return vis.xline(d.avg_delay);
-            });
+            })
+            .style("opacity", 1);
 
         indicator.exit().remove();
-
-        // Call axis function with the new domain
-        vis.svg.select(".x-axis").call(vis.xAxis);
-        // vis.svg.select(".y-axis").call(vis.yAxis);
     }
 
 
@@ -184,6 +215,14 @@ class delayDist {
             });
         }
 
-        vis.wrangleData();
+        if(vis.filteredData.length > 0) {
+            vis.wrangleData();
+        }
+        else {
+            vis.svg.selectAll(".graph-error")
+                .style("opacity", 1)
+            vis.svg.selectAll(".indicator")
+                .style("opacity", 0)
+        }
     }
 }

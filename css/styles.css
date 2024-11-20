@@ -4,8 +4,12 @@ body {
     color: white;
 }
 
-.title text {
+.title text, .axis-text {
     fill: white;
+}
+
+.tick text {
+    font-family: Doto;
 }
 
 .tooltip {
