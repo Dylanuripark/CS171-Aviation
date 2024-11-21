@@ -31,6 +31,7 @@ body {
 
 .form-select {
     display: inline-block;
+    font-weight: 700;
 }
 
 #scroll {
