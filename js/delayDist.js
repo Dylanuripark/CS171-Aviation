@@ -178,7 +178,7 @@ class delayDist {
             .attr("y", 0)
             .attr("height", vis.height)
             .attr("width", 8)
-            .style("fill", "#ee6c4d")
+            .style("fill", "#DCA11D")
             .merge(indicator)
             .transition()
             .attr("x", function (d) {
@@ -200,7 +200,7 @@ class delayDist {
             .attr("class", "indicrect")
             .attr("y", 0)
             .attr("height", 30)
-            .style("fill", "#ee6c4d")
+            .style("fill", "#DCA11D") // #ee6c4d
             .merge(indicrect)
             .transition()
             .attr("x", function (d) {

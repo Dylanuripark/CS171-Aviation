@@ -22,6 +22,17 @@ Promise.all([
 
 let parseDate = d3.timeParse("%Y");
 
+let carrierData
+d3.csv("data/carriers.csv", row => {
+    row.carrier_delay = +row.carrier_delay;
+    row.late_aircraft_delay = +row.late_aircraft_delay;
+    row.nas_delay = +row.nas_delay;
+    row.weather_delay = +row.weather_delay;
+    return row
+}).then(csv => {
+    carrierData = csv
+    delaysByCarrierVis = new delaysByCarrier('delaysByCarrier', carrierData);
+})
 
 let delayData
 d3.csv("data/Airline_Delay_cause.csv", row => {
