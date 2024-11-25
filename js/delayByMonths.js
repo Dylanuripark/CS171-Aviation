@@ -4,6 +4,18 @@ class delayByMonths {
         this.parentContainer = parentContainer;
         this.displayData = displayData;
 
+        let colors = ["#DCA11D", "#e4b45e", "#ebc78a", "#f2dab2"];
+
+        this.dataCategories = ['averageCarrierDelay', 'averageWeatherDelay','averageNationalAviationSystemDelay','averageLate_aircraftDelay']
+
+        let colorArray = this.dataCategories.map((d,i) => {
+            return colors[i%4]
+        })
+
+        this.colorScale = d3.scaleOrdinal()
+            .domain(this.dataCategories)
+            .range(colorArray)
+
         this.initVis();
     }
     initVis() {
@@ -19,6 +31,14 @@ class delayByMonths {
             .append('svg')
             .attr("width", vis.width + vis.margin.left + vis.margin.right)
             .attr("height", vis.height + vis.margin.top + vis.margin.bottom);
+
+        vis.svg.append("defs").append("clipPath")
+            .attr("id", "clip")
+            .append("rect")
+            .attr("width", vis.width)
+            .attr("height", vis.height);
+
+
 
         vis.xAxis=vis.svg.append("g")
             .attr("class", "x-axis");
@@ -41,6 +61,13 @@ class delayByMonths {
             .attr('text-anchor', 'middle');
 
 
+        vis.svg.append("text")
+            .attr("class", "tooltip-text")
+            .attr("font-size", "12px")
+            .attr("x", 5)
+            .attr("y", 10)
+            .attr("fill", 'white')
+
         vis.wrangleData();
     }
 
@@ -55,10 +82,10 @@ class delayByMonths {
             let month = airplane.key
 
             let arrivalDelayCount = 0
-            let carrierDelayCount = 0
-            let weatherDelayCount = 0
-            let nationalAviationSystemDelayCount = 0
-            let lateAircraftDelayCount = 0
+            // let carrierDelayCount = 0
+            // let weatherDelayCount = 0
+            // let nationalAviationSystemDelayCount = 0
+            // let lateAircraftDelayCount = 0
             let totalFlightsCount = 0
             let arrivalDelayMinutes = 0
             let carrierDelayMinutes = 0
@@ -67,10 +94,10 @@ class delayByMonths {
             let late_aircraftDelayMinutes = 0
 
             airplane.value.forEach(entry => {
-                carrierDelayCount += entry.carrier_ct
-                weatherDelayCount += entry.weather_ct
-                nationalAviationSystemDelayCount += entry.nas_ct
-                lateAircraftDelayCount += entry.late_aircraft_ct
+                // carrierDelayCount += entry.carrier_ct
+                // weatherDelayCount += entry.weather_ct
+                // nationalAviationSystemDelayCount += entry.nas_ct
+                // lateAircraftDelayCount += entry.late_aircraft_ct
                 arrivalDelayCount += entry.carrier_ct + entry.weather_ct + entry.nas_ct + entry.late_aircraft_ct
                 totalFlightsCount += entry.arr_flights
                 arrivalDelayMinutes += entry.arr_delay
@@ -82,17 +109,10 @@ class delayByMonths {
             vis.monthInfo.push(
                 {
                     month: month,
-                    carrierDelayCount: carrierDelayCount,
-                    weatherDelayCount: weatherDelayCount,
-                    nationalAviationSystemDelayCount: nationalAviationSystemDelayCount,
-                    lateAircraftDelayCount: lateAircraftDelayCount,
-                    arrivalDelayCount: arrivalDelayCount,
-                    totalFlightsCount: totalFlightsCount,
-                    arrivalDelayMinutes: arrivalDelayMinutes,
-                    carrierDelayMinutes: carrierDelayMinutes,
-                    weatherDelayMinutes: weatherDelayMinutes,
-                    nationalAviationSystemDelayMinutes: nationalAviationSystemDelayMinutes,
-                    late_aircraftDelayMinutes: late_aircraftDelayMinutes,
+                    averageCarrierDelay: carrierDelayMinutes/totalFlightsCount,
+                    averageWeatherDelay: weatherDelayMinutes/totalFlightsCount,
+                    averageNationalAviationSystemDelay: nationalAviationSystemDelayMinutes/totalFlightsCount,
+                    averageLate_aircraftDelay: late_aircraftDelayMinutes/totalFlightsCount,
                     averageDelay: arrivalDelayMinutes/totalFlightsCount,
                 }
             )
@@ -109,7 +129,37 @@ class delayByMonths {
     updateVis() {
         let vis = this;
 
+
         vis.yScale.domain([0,d3.max(vis.monthInfo, d => d.averageDelay)]);
+
+
+        let stack = d3.stack()
+            .keys(vis.dataCategories)
+
+        vis.stackedData = stack(vis.monthInfo)
+        vis.area = d3.area()
+            .curve(d3.curveLinear)
+            .x(d=> vis.xScale(d.data.month))
+            .y0(d=> vis.yScale(d[0]))
+            .y1(d=> vis.yScale(d[1]))
+
+
+        let categories = vis.svg.selectAll(".area")
+            .data(vis.stackedData);
+
+        categories.enter().append("path")
+            .attr("class", "area")
+            .merge(categories)
+            .style("fill", d => {
+                return vis.colorScale(d)
+            })
+            .attr("d", d => vis.area(d))
+            .on("mouseover", function(event, d) {
+                vis.svg.select(".tooltip-text")
+                    .text(d.key)
+        })
+
+        categories.exit().remove()
 
         let path = vis.svg.selectAll(".line")
             .data([vis.monthInfo]);
