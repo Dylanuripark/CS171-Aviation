@@ -6,7 +6,7 @@ class delayByMonths {
 
         let colors = ["#DCA11D", "#e4b45e", "#ebc78a", "#f2dab2"];
 
-        this.dataCategories = ['averageCarrierDelay', 'averageWeatherDelay','averageNationalAviationSystemDelay','averageLate_aircraftDelay']
+        this.dataCategories = ['averageCarrierDelay','averageLate_aircraftDelay','averageNationalAviationSystemDelay','averageWeatherDelay']
 
         let colorArray = this.dataCategories.map((d,i) => {
             return colors[i%4]
@@ -53,20 +53,10 @@ class delayByMonths {
         vis.yScale = d3.scaleLinear()
             .range([vis.height,vis.margin.top])
 
-        vis.svg.append('g')
-            .attr('class', 'title bar-title')
-            .append('text')
-            .text("Average Delay by Month (Minutes)")
-            .attr('transform', `translate(${vis.width / 2}, 20)`)
-            .attr('text-anchor', 'middle');
 
-
-        vis.svg.append("text")
-            .attr("class", "tooltip-text")
-            .attr("font-size", "12px")
-            .attr("x", 5)
-            .attr("y", 10)
-            .attr("fill", 'white')
+        vis.tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0)
 
         vis.wrangleData();
     }
@@ -143,9 +133,15 @@ class delayByMonths {
             .y0(d=> vis.yScale(d[0]))
             .y1(d=> vis.yScale(d[1]))
 
-
         let categories = vis.svg.selectAll(".area")
             .data(vis.stackedData);
+
+        let tooltipMap = {
+            averageCarrierDelay: "Average Carrier Delay",
+            averageWeatherDelay: "Average Weather Delay",
+            averageNationalAviationSystemDelay: "Average National Aviation System Delay",
+            averageLate_aircraftDelay: "Average Late Aircraft Delay",
+        }
 
         categories.enter().append("path")
             .attr("class", "area")
@@ -155,9 +151,21 @@ class delayByMonths {
             })
             .attr("d", d => vis.area(d))
             .on("mouseover", function(event, d) {
-                vis.svg.select(".tooltip-text")
-                    .text(d.key)
-        })
+                console.log(d)
+                d3.select(this).attr("r", 5);
+                vis.tooltip.transition()
+                    .duration(200)
+                    .style("opacity",1);
+                vis.tooltip.html(`<strong>${tooltipMap[d.key]}`)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", function(event, d) {
+                d3.select(this).attr("r", 3);
+                vis.tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            })
 
         categories.exit().remove()
 
@@ -187,6 +195,12 @@ class delayByMonths {
         vis.svg.select(".y-axis")
             .attr("transform", `translate(${vis.margin.left}, 0)`)
             .call(d3.axisLeft(vis.yScale));
+
+        vis.svg.append("text")
+            .attr("class", "axis-text")
+            .attr("transform", `translate(${vis.margin.left / 2}, ${vis.height / 2}) rotate(-90)`)
+            .style("text-anchor", "middle")
+            .text("Average delay (min)")
 
     }
 }
