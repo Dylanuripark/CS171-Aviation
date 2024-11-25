@@ -12,12 +12,28 @@ body {
     font-family: Doto;
 }
 
+.legend {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.legend-var {
+    margin-bottom: 0;
+}
+
+.square {
+    height: 1em;
+    width: 1em;
+    margin-left: 20px;
+    margin-right: 10px;
+}
 .tooltip {
     position: absolute;
     text-align: left;
     width: auto;
     padding: 8px;
-    font: 12px sans-serif;
+    font-family: Doto;
     background: lightsteelblue;
     border: 0px;
     border-radius: 8px;

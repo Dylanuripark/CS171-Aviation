@@ -213,10 +213,10 @@ class delayDist {
             })
             .attr("width", function (d) {
                 if(d.avg_delay < 100) {
-                    return 211
+                    return 205
                 }
                 else {
-                    return 218;
+                    return 212;
                 }
             })
             .style("opacity", 1);
@@ -242,7 +242,7 @@ class delayDist {
                 }
             })
             .text(function(d) {
-                return "Avg. delay: " + d.avg_delay.toFixed(1) + " min.";
+                return "Avg. delay: " + d.avg_delay.toFixed(1) + " min";
             })
             .style("opacity", 1);
 

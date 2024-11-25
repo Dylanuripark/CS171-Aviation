@@ -47,6 +47,11 @@ class delaysByCarrier {
 
         vis.colors = ["#DCA11D", "#e4b45e", "#ebc78a", "#f2dab2"]
 
+        // Tooltip div for interactivity
+        vis.tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
         let bars = vis.svg.selectAll(".bar")
             .data(vis.delays);
 
@@ -57,6 +62,21 @@ class delaysByCarrier {
             .attr("x", d => vis.x(d.pos))
             .attr("y", (d, i) => vis.y(vis.airlines_short[Math.floor(i / 4)]) + 0.1 * vis.y.bandwidth())
             .style("fill", (d, i) => vis.colors[i % 4])
+            .on("mouseover", function(event, d, i) {
+                d3.select(this).attr("r", 5);
+                vis.tooltip.transition()
+                    .duration(200)
+                    .style("opacity", 1);
+                vis.tooltip.html(`<strong>${vis.airlines_short[Math.floor((d.index - 1) / 4)]}<br>${d.name} delay<br/>${Number(d.value).toFixed(1)} min</strong>`)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", function(event, d) {
+                d3.select(this).attr("r", 3);
+                vis.tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            });
 
         vis.xAxis = d3.axisBottom()
             .scale(vis.x);
@@ -65,10 +85,14 @@ class delaysByCarrier {
             .scale(vis.y);
 
         vis.svg.append("g")
+            .attr("class", "x-axis axis")
+            .attr("transform", "translate(0," + vis.height + ")");
+        vis.svg.append("g")
             .attr("class", "y-axis axis")
             .style("font-size", "1em");
 
         // Call axis functions
+        vis.svg.select(".x-axis").call(vis.xAxis);
         vis.svg.select(".y-axis").call(vis.yAxis);
 
         vis.svg.selectAll("path, line").remove();
@@ -85,6 +109,6 @@ class delaysByCarrier {
             .attr("x", vis.width / 2)
             .attr("y", vis.height + 40)
             .style("text-anchor", "middle")
-            .text("Delay segmentation");
+            .text("Average delay (min)");
     }
 }
