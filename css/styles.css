@@ -28,6 +28,7 @@ body {
     margin-left: 20px;
     margin-right: 10px;
 }
+
 .tooltip {
     position: absolute;
     text-align: left;
@@ -72,4 +73,58 @@ body {
 .scroll__graphic.is-bottom {
     bottom: 0;
     top: auto;
+}
+
+/* Tooltip Styles */
+.tooltip {
+    position: absolute;
+    text-align: left;
+    padding: 8px;
+    font-size: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    pointer-events: none;
+    color: #333;
+}
+
+/* Legend Styles */
+.legend {
+    font-size: 12px;
+}
+
+.legend .legend-item {
+    margin-bottom: 5px;
+}
+
+.legend .legend-item circle {
+    stroke: black;
+    stroke-width: 1px;
+}
+
+.legend .legend-item text {
+    font-size: 16px;
+    font-weight: bold;
+    fill: white;
+    vertical-align: middle;
+}
+
+/* Filter Container */
+.filter-container {
+    position: absolute;
+    bottom: -30px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.filter-container label {
+    margin-right: 5px;
+    color: black;
+}
+
+.filter-container .form-select {
+    width: 200px;
+    display: inline-block;
 }

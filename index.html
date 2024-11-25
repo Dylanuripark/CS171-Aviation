@@ -27,8 +27,8 @@
     <div class="row" style="margin-top: 4vh;">
         <div class="col-md-1"></div>
         <div class="col-md-10">
-            <h4>Graph title and introductory information</h4>
-            <p>To be completed in V2</p>
+            <h4>The Airports of the Americas</h4>
+            <p>The busiest and most delayed airports in America</p>
         </div>
         <div class="col-md-1"></div>
     </div>
@@ -38,11 +38,25 @@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <div id="flightMap" style="height: 75vh"></div>
+                <div id="flightMap" style="height: 75vh; position: relative;">
+
+
+
+                    <div class="filter-container">
+                        <label for="airportTypeSelect">Airport Type:</label>
+                        <select id="airportTypeSelect" class="form-select">
+                            <option value="all">All Airports</option>
+                            <option value="international">International Airports</option>
+                            <option value="domestic">Domestic Airports</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="col-md-1"></div>
         </div>
     </div>
+
+
 
     <div class="row" style="height: 4vh">
 

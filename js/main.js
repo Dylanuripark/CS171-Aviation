@@ -1,22 +1,46 @@
 Promise.all([
     d3.json("data/us-states.json"),
-    d3.csv("data/usa-airports.csv", row => {
-        return {
-            iata: row.iata,
-            name: row.name,
-            city: row.city,
-            state: row.state,
-            latitude: +row.latitude,
-            longitude: +row.longitude
-        };
-    })
+    d3.csv("data/delay_data.csv", row => ({
+        iata: row.iata,
+        name: row.airport_name,
+        city: row.Airport.split(" - ")[1]?.trim(),
+        state: row.Airport.split(" - ")[0]?.trim(),
+        latitude: +row.latitude,
+        longitude: +row.longitude,
+        flight_type: row[" Flight Type"].trim(),
+        departures: +row.Departures.replace(/,/g, ""),
+        arrivals: +row.Arrivals.replace(/,/g, ""),
+        total_operations: +row["Total Operations"].replace(/,/g, ""),
+        date: row.Date,
+    }))
 ]).then(([usMapData, airportData]) => {
+    // Aggregate data by airport
+    let airportDataMap = d3.rollups(
+        airportData,
+        v => ({
+            name: v[0].name,
+            city: v[0].city,
+            state: v[0].state,
+            latitude: v[0].latitude,
+            longitude: v[0].longitude,
+            isInternational: v.some(d => d.flight_type.includes("Foreign") || d.flight_type.includes("International")),
+            total_departures: d3.sum(v, d => d.departures),
+            total_arrivals: d3.sum(v, d => d.arrivals),
+            total_operations: d3.sum(v, d => d.total_operations),
+            daily_avg_operations: d3.mean(v, d => d.total_operations),
+            flight_types: new Set(v.map(d => d.flight_type))
+        }),
+        d => d.iata
+    );
+
+    // Convert to an array of objects
+    airportData = airportDataMap.map(([iata, data]) => ({ iata, ...data }));
+
     // Initialize the map visualization
     new FlightsMap("flightMap", airportData, usMapData);
 }).catch(error => {
     console.error('Error loading data:', error);
 });
-
 
 
 
