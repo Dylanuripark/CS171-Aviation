@@ -23,9 +23,9 @@ class delayByMonths {
 
         let size = document.getElementById(vis.parentContainer).getBoundingClientRect();
 
-        vis.margin ={top: 50, right: 50, bottom: 50, left: 50};
+        vis.margin ={top: 50, right: 50, bottom: 0, left: 100};
         vis.width = size.width - vis.margin.left - vis.margin.right;
-        vis.height = size.height - vis.margin.top - vis.margin.bottom;
+        vis.height = 500 - vis.margin.top - vis.margin.bottom;
 
         vis.svg = d3.select("#" + vis.parentContainer)
             .append('svg')

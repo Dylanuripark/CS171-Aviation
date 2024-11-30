@@ -19,96 +19,105 @@
 <!-- Not sure exactly how to make scrolling webpage, but I imagine we could do this for our layout-->
 
 <div id="fullpage">
-    <div class="section active" id="section0">
-        <div class="row" style="height: 10vh; background: black;">
-            <div class="col text-center d-flex justify-content-center align-items-center">
-                <h2 style="margin-bottom: 0"><b>The Wide World of Delayed Flights</b></h2>
+    <div class="section active" id="section0" style="background-image: url(img/delay_img.jpg)">
+        <div class="row" style="background-color: rgb(150, 0, 0, 0.9);">
+            <div class="col text-center justify-content-center align-items-center">
+                <div>
+                    <div class="row">
+                        <h1 style="margin-bottom: 0vh; line-height: 15vh;"><b>The Wide World of Delayed Flights</b></h1>
+                        <p><i>a CS 1710 final project by</i></p>
+                        <h5 style="margin-bottom: 5vh;">Dylan Park, Paurakh Rijal, and Pranay Varada</h5>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="section" id="section1">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <h2>The Airports of the Americas</h2>
-            <h4>The busiest and most delayed airports in America</h4>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-7">
+                <h2>The Airports of the Americas</h2>
+                <h4>The busiest and most delayed airports in America</h4>
+            </div>
+            <div class="col-md-3">
+                <div class="filter-container">
+                    <label for="airportTypeSelect">Airport Type:</label>
+                    <select id="airportTypeSelect" class="form-select">
+                        <option value="all">All Airports</option>
+                        <option value="international">International Airports</option>
+                        <option value="domestic">Domestic Airports</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
         </div>
-        <div class="col-md-1"></div>
 
     <!--Space for first map-->
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <div id="flightMap" style="height: 65vh; position: relative;">
-
-
-
-                    <div class="filter-container">
-                        <label for="airportTypeSelect">Airport Type:</label>
-                        <select id="airportTypeSelect" class="form-select">
-                            <option value="all">All Airports</option>
-                            <option value="international">International Airports</option>
-                            <option value="domestic">Domestic Airports</option>
-                        </select>
-                    </div>
+                <div id="flightMap">
                 </div>
             </div>
             <div class="col-md-1"></div>
         </div>
     </div>
 
-
-
-    <div class="row" style="height: 4vh">
-
-    </div>
-
     <!--Delays by Carrier-->
     <div class="section" id="section3">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <h1>Delays come in many forms</h1>
-            <h4>How America's top airlines compare in the reasons for their delays</h4>
-            <div class="legend">
-                <p class="legend-var" style="margin-right: 20px">Reason for delay</p>
-                <div class="square" style="background-color: #DCA11D"></div>
-                <p class="legend-var">Carrier</p>
-                <div class="square" style="background-color: #e4b45e"></div>
-                <p class="legend-var">Late aircraft</p>
-                <div class="square" style="background-color: #ebc78a"></div>
-                <p class="legend-var">National Airspace System*</p>
-                <div class="square" style="background-color: #f2dab2"></div>
-                <p class="legend-var">Weather</p>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <h1>Delays come in many forms</h1>
+                <h4>How America's top airlines compare in the reasons for their delays</h4>
+                <div class="legend">
+                    <p class="legend-var" style="margin-right: 20px">Reason for delay</p>
+                    <div class="square" style="background-color: #DCA11D"></div>
+                    <p class="legend-var">Carrier</p>
+                    <div class="square" style="background-color: #e4b45e"></div>
+                    <p class="legend-var">Late aircraft</p>
+                    <div class="square" style="background-color: #ebc78a"></div>
+                    <p class="legend-var">National Airspace System*</p>
+                    <div class="square" style="background-color: #f2dab2"></div>
+                    <p class="legend-var">Weather</p>
+                </div>
             </div>
+            <div class="col-md-1"></div>
         </div>
-        <div class="col-md-1"></div>
 
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <div id="delaysByCarrier" style="height: 63vh"></div>
-            <p style="font-size: 0.8em"> *Non-extreme weather, airport operations, air traffic control, etc.</p>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div id="delaysByCarrier"></div>
+                <p style="font-size: 0.8em"> *Non-extreme weather, airport operations, air traffic control, etc.</p>
+            </div>
+            <div class="col-md-1"></div>
         </div>
-        <div class="col-md-1"></div>
 
     </div>
 
     <div class="section" id="section4">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <h4>Analysis</h4>
-            <p>The top three airlines for average delays in the US are low-cost airlines. Interestingly, these low-cost airlines are followed by American, United, and Delta, the three largest airlines in the US.</p>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <h4>Analysis</h4>
+                <p>The top three airlines for average delays in the US are low-cost airlines. Interestingly, these low-cost airlines are followed by American, United, and Delta, the three largest airlines in the US.</p>
+            </div>
+            <div class="col-md-1"></div>
         </div>
-        <div class="col-md-1"></div>
     </div>
 
     <!--Main Message-->
     <div class="section" id="section5">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <h4>Main Message</h4>
-            <p>Placeholder for text here.</p>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <h4>Main Message</h4>
+                <p>Placeholder for text here.</p>
+            </div>
+            <div class="col-md-1"></div>
         </div>
-        <div class="col-md-1"></div>
     </div>
 
     <div class="section" id="section6">
@@ -116,30 +125,34 @@
             <div class="col-md-1"></div>
             <div class="col-md-10">
                 <h2>How delays change by the months</h2>
-                <div class="row" style="height: 90vh" id="delaybyMonths"></div>
+                <div class="row" id="delaybyMonths"></div>
             </div>
             <div class="col-md-1"></div>
         </div>
     </div>
 
     <div class="section" id="section7">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <h4>Analysis</h4>
-            <p>Delays seem to be the most common in the summer months when travel is at its peak. Although not a period that is particularly known for debilitating weather, it is interesting to note that the average weather delay time also went up in these months.</p>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <h4>Analysis</h4>
+                <p>Delays seem to be the most common in the summer months when travel is at its peak. Although not a period that is particularly known for debilitating weather, it is interesting to note that the average weather delay time also went up in these months.</p>
+            </div>
+            <div class="col-md-1"></div>
         </div>
-        <div class="col-md-1"></div>
     </div>
 
     <!--How long flight will be delayed-->
 
     <div class="section" id="section8">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <h1>How much can you expect to be delayed?</h1>
-            <h4>See how the average delay of any combination of airport and airline compares to the overall distribution</h4>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <h1>How much can you expect to be delayed?</h1>
+                <h4>See how the average delay of any combination of airport and airline compares to the overall distribution</h4>
+            </div>
+            <div class="col-md-1"></div>
         </div>
-        <div class="col-md-1"></div>
         <div class="row" style="margin-top: 2vh;">
             <div class="col-md-1"></div>
             <div class="col-md-10">
@@ -534,36 +547,37 @@
                 </select>
             </div>
             <div class="col-md-1"></div>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div id="delayDist"></div>
+            </div>
+            <div class="col-md-1"></div>
         </div>
     </div>
 
-
-    <div class="section" id="section9"style="margin-top: 4vh;">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <div id="delayDist" style="height: 80vh"></div>
+    <div class="section" id="section9">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <h4>Analysis</h4>
+                <p>Placeholder for future discussion.</p>
+            </div>
+            <div class="col-md-1"></div>
         </div>
-        <div class="col-md-1"></div>
-    </div>
-
-    <div class="section" id="section10">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <h4>Analysis</h4>
-            <p>Placeholder for future discussion.</p>
-        </div>
-        <div class="col-md-1"></div>
     </div>
 
     <!--To avoid delays ____-->
-    <div class="section" id="section11">
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-10">
-            <h4>Paragraph: How to avoid delays</h4>
-            <p>Adding conclusion and potential final info here</p>
-        </div>
-        <div class="col-md-1">
+    <div class="section" id="section10">
+        <div class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-10">
+                <h4>Paragraph: How to avoid delays</h4>
+                <p>Adding conclusion and potential final info here</p>
+            </div>
+            <div class="col-md-1">
+            </div>
         </div>
     </div>
 </div>
@@ -600,8 +614,8 @@
         scrollOverflow: true,
         normalScrollElements: '#flightMap',
         touchSensitivity:15,
-        anchors:['page1','page2','page3','page4','page5','page6','page7','page8','page9','page10','page11'],
-        navigationTooltips: ['1','2','3','4','5','6','7','8','9','10','11'],
+        anchors:['page1','page2','page3','page4','page5','page6','page7','page8','page9','page10'],
+        navigationTooltips: ['1','2','3','4','5','6','7','8','9','10'],
         showActiveTooltip: true,
     });
 </script>

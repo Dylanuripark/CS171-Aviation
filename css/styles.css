@@ -112,7 +112,6 @@ body {
 
 /* Filter Container */
 .filter-container {
-    position: absolute;
     bottom: -30px;
     left: 20px;
     background: rgba(255, 255, 255, 0.8);

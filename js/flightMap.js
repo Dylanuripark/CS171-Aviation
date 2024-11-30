@@ -15,7 +15,7 @@ class FlightsMap {
 
         vis.margin = { top: 20, right: 20, bottom: 20, left: 20 };
         vis.width = size.width - vis.margin.left - vis.margin.right;
-        vis.height = size.height - vis.margin.top - vis.margin.bottom;
+        vis.height = 500 - vis.margin.top - vis.margin.bottom;
 
         // Create SVG with zoom behavior
         vis.svg = d3.select("#" + vis.parentContainer)
@@ -32,7 +32,7 @@ class FlightsMap {
         // Create projection and path generator for US map
         vis.projection = d3.geoAlbersUsa()
             .translate([vis.width / 2, vis.height / 2])
-            .scale(vis.width);
+            .scale(vis.width * 0.8);
 
         vis.path = d3.geoPath()
             .projection(vis.projection);

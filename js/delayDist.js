@@ -231,6 +231,7 @@ class delayDist {
             .attr("y", 20)
             .style("fill", "black")
             .style("font-weight", "700")
+            .style("font-size", "1em")
             .merge(indictext)
             .transition()
             .attr("x", function (d) {
