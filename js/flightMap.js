@@ -117,10 +117,8 @@ class FlightsMap {
             .attr("r", d => {
                 if (busiestIATAs.has(d.iata)) {
                     return vis.sizeScale(d.total_operations);
-                } else if (d.isInternational) {
-                    return 5; // Slightly bigger for international airports
                 } else {
-                    return 3; // Default size for other airports
+                    return 3; // Default size for all other airports
                 }
             })
             .attr("fill", d => {
@@ -140,12 +138,12 @@ class FlightsMap {
                     .duration(200)
                     .style("opacity", 0.9);
                 vis.tooltip.html(`
-                    <strong>${d.name} (${d.iata})</strong><br/>
-                    ${d.city}, ${d.state}<br/>
-                    Total Operations: ${d3.format(",")(d.total_operations)}<br/>
-                    Daily Avg Operations: ${d3.format(".2f")(d.daily_avg_operations)}<br/>
-                    Airport Type: ${d.isInternational ? "International" : "Domestic"}
-                `)
+            <strong>${d.name} (${d.iata})</strong><br/>
+            ${d.city}, ${d.state}<br/>
+            Total Operations: ${d3.format(",")(d.total_operations)}<br/>
+            Daily Avg Operations: ${d3.format(".2f")(d.daily_avg_operations)}<br/>
+            Airport Type: ${d.isInternational ? "International" : "Domestic"}
+        `)
                     .style("left", (event.pageX + 10) + "px")
                     .style("top", (event.pageY - 28) + "px");
             })
