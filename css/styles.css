@@ -81,12 +81,18 @@ body {
     position: absolute;
     text-align: left;
     padding: 8px;
-    font-size: 12px;
-    background: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-family: Doto;
+    background: rgba(255, 255, 255, 0.9); /* Adjust as needed */
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 8px;
     pointer-events: none;
-    color: #333;
+    color: #000; /* Dark font color for better readability */
+}
+
+.tooltip strong {
+    font-size: 14px;
+    font-weight: bold;
 }
 
 /* Legend Styles */
