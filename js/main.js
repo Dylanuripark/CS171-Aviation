@@ -36,13 +36,13 @@ Promise.all([
             let hasUSToForeign = v.some(d => d.flight_type && d.flight_type.includes("US to Foreign"));
 
             // Determine category
-            let category;
+            let flight_category;
             if (hasForeignToUS || hasUSToForeign) {
-                category = "International";
+                flight_category = "International";
             } else if (hasDomestic && !hasForeignToUS && !hasUSToForeign) {
-                category = "Domestic";
+                flight_category = "Domestic";
             } else {
-                category = "Other";
+                flight_category = "Other";
             }
 
             let avg_delay = delayMap.get(iata) || 0;
@@ -53,7 +53,7 @@ Promise.all([
                 state: v[0].state,
                 latitude: v[0].latitude,
                 longitude: v[0].longitude,
-                category: category,
+                flight_category: flight_category,
                 total_departures: d3.sum(v, d => d.departures),
                 total_arrivals: d3.sum(v, d => d.arrivals),
                 total_operations: d3.sum(v, d => d.total_operations),

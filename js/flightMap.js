@@ -119,9 +119,9 @@ class FlightsMap {
         let selectedType = d3.select("#airportTypeSelect").property("value");
         let filteredData = vis.airportData.filter(d => {
             if (selectedType === "All") return true;
-            if (selectedType === "International") return d.category === "International";
-            if (selectedType === "Domestic") return d.category === "Domestic";
-            if (selectedType === "Other") return d.category === "Other";
+            if (selectedType === "International") return d.flight_category === "International";
+            if (selectedType === "Domestic") return d.flight_category === "Domestic";
+            if (selectedType === "Other") return d.flight_category === "Other";
             return true;
         });
 
@@ -153,7 +153,7 @@ class FlightsMap {
                     return "red";
                 } else if (vis.busiestIATAs.has(d.iata)) {
                     return "orange";
-                } else if (d.category === "International") {
+                } else if (d.flight_category === "International") {
                     return "blue";
                 } else {
                     return "rgba(255, 255, 255, 0.5)";
@@ -169,7 +169,7 @@ class FlightsMap {
                     ${d.city}, ${d.state}<br/>
                     Total Operations: ${d3.format(",")(d.total_operations)}<br/>
                     Average Delay: ${d.avg_delay ? d.avg_delay.toFixed(2) + ' mins' : 'N/A'}<br/>
-                    Airport Type: ${d.category}
+                    Airport Type: ${d.flight_category}
                 `)
                     .style("left", (event.pageX + 10) + "px")
                     .style("top", (event.pageY - 28) + "px");
