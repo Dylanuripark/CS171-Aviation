@@ -106,8 +106,53 @@
         </div>
     </div>
 
-    <!--Main Message-->
     <div class="section" id="section4">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <h2>JetBlue: America's most delayed airline</h2>
+                <h4>Comparisons to all other airlines</h4>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+
+        <div class="row" style="margin-top: 2vh;">
+            <div class="col-md-1"></div>
+            <div class="col-md-5">
+                <div class="row">
+                    <p style="margin-bottom: 1vh"><span class="subplot-title">Average delay (minutes)</span></p>
+                    <div id="jetBlueDelay" style="height: 30vh;"></div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <p style="margin-bottom: 1vh;"><span class="subplot-title">Delayed flights with 15+ min delays (percentage)</span></p>
+                    <div id="jetBlue15" style="height: 30vh;"></div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+
+        <div class="row" style="margin-top: 4vh;">
+            <div class="col-md-1"></div>
+            <div class="col-md-5">
+                <div class="row">
+                    <p style="margin-bottom: 1vh;"><span class="subplot-title">Carrier delay (minutes)</span></p>
+                    <div id="jetBlueCarrier" style="height: 30vh;"></div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <p style="margin-bottom: 1vh;"><span class="subplot-title">Late aircraft delay (minutes)</span></p>
+                    <div id="jetBlueAircraft" style="height: 30vh;"></div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+
+    <!--Main Message-->
+    <div class="section" id="section5">
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
@@ -118,7 +163,7 @@
         </div>
     </div>
 
-    <div class="section" id="section5">
+    <div class="section" id="section6">
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
@@ -129,7 +174,7 @@
         </div>
     </div>
 
-    <div class="section" id="section6">
+    <div class="section" id="section7">
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
@@ -142,7 +187,7 @@
 
     <!--How long flight will be delayed-->
 
-    <div class="section" id="section7">
+    <div class="section" id="section8">
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
@@ -555,7 +600,7 @@
         </div>
     </div>
 
-    <div class="section" id="section8">
+    <div class="section" id="section9">
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
@@ -567,7 +612,7 @@
     </div>
 
     <!--To avoid delays ____-->
-    <div class="section" id="section9">
+    <div class="section" id="section10">
         <div class="row">
             <div class="col-md-1">
             </div>
@@ -613,14 +658,15 @@
         scrollOverflow: true,
         normalScrollElements: '#flightMap',
         touchSensitivity:15,
-        anchors:['page1','page2','page3','page4','page5','page6','page7','page8','page9','page10'],
-        navigationTooltips: ['1','2','3','4','5','6','7','8','9','10'],
+        anchors:['page1','page2','page3','page4','page5','page6','page7','page8','page9','page10', 'page11'],
+        navigationTooltips: ['1','2','3','4','5','6','7','8','9','10', '11'],
         showActiveTooltip: true,
     });
 </script>
 <!-- OWN JS -->
 <script src="js/flightMap.js"></script>
 <script src="js/delaysByCarrier.js"></script>
+<script src="js/jetblue.js"></script>
 <script src="js/delayByMonths.js"></script>
 <script src="js/delayDist.js"></script>
 <script src="js/main.js"></script>
