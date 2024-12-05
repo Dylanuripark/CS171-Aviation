@@ -2,7 +2,7 @@ Promise.all([
     d3.json("data/us-states.json"),
     d3.csv("data/delay_data.csv", row => ({
         iata: row.iata,
-        name: row.airport_name,
+        name: row.airport_name.trim(),
         city: row.Airport.split(" - ")[1]?.trim(),
         state: row.Airport.split(" - ")[0]?.trim(),
         latitude: +row.latitude,
@@ -11,12 +11,13 @@ Promise.all([
         departures: +row.Departures.replace(/,/g, ""),
         arrivals: +row.Arrivals.replace(/,/g, ""),
         total_operations: +row["Total Operations"].replace(/,/g, ""),
+        avg_delay: +row.avg_delay,
         date: row.Date,
     }))
-]).then(([usMapData, airportData]) => {
-    // Aggregate data by airport
+]).then(([usMapData, delayData]) => {
+    // Aggregate data by airport (iata)
     let airportDataMap = d3.rollups(
-        airportData,
+        delayData,
         v => ({
             name: v[0].name,
             city: v[0].city,
@@ -27,14 +28,14 @@ Promise.all([
             total_departures: d3.sum(v, d => d.departures),
             total_arrivals: d3.sum(v, d => d.arrivals),
             total_operations: d3.sum(v, d => d.total_operations),
-            daily_avg_operations: d3.mean(v, d => d.total_operations),
+            avg_delay: d3.mean(v, d => d.avg_delay),
             flight_types: new Set(v.map(d => d.flight_type))
         }),
         d => d.iata
     );
 
     // Convert to an array of objects
-    airportData = airportDataMap.map(([iata, data]) => ({ iata, ...data }));
+    let airportData = airportDataMap.map(([iata, data]) => ({ iata, ...data }));
 
     // Initialize the map visualization
     new FlightsMap("flightMap", airportData, usMapData);
