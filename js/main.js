@@ -112,6 +112,7 @@ d3.csv("data/Airline_Delay_Cause.csv", row => {
 }).then(csv => {
     delayData = csv;
     delayByMonths = new delayByMonths('delaybyMonths', delayData);
+    arrivalDelayvsArrivals = new arrivalDelayvsArrivals('arrivalDelayvsArrivals', delayData)
 });
 
 let avgDelayData;
