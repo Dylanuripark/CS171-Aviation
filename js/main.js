@@ -1,5 +1,9 @@
 let parseDate = d3.timeParse("%Y");
 
+let flightDataGlobal;
+let delayCausesData; // We'll store this globally
+let histData;
+
 Promise.all([
     d3.json("data/us-states.json"),
     d3.csv("data/flight_data.csv", row => {
@@ -21,21 +25,41 @@ Promise.all([
     d3.csv("data/delay_data.csv", d => ({
         iata: d.iata,
         avg_delay: +d.avg_delay
-    }))
-]).then(([usMapData, flightData, delayData]) => {
-    let delayMap = new Map(delayData.map(d => [d.iata, d.avg_delay]));
+    })),
+    d3.csv("data/Airline_Delay_Cause.csv", row => {
+        row.year  = parseDate(row.year);
+        row.month = +row.month;
+        row.arr_flights = +row.arr_flights;
+        row.arr_del15 = +row.arr_del15;
+        row.carrier_ct = +row.carrier_ct;
+        row.weather_ct = +row.weather_ct;
+        row.nas_ct = +row.nas_ct;
+        row.security_ct = +row.security_ct;
+        row.late_aircraft_ct = +row.late_aircraft_ct;
+        row.arr_cancelled = +row.arr_cancelled;
+        row.arr_diverted = +row.arr_diverted;
+        row.arr_delay = +row.arr_delay;
+        row.carrier_delay = +row.carrier_delay;
+        row.weather_delay = +row.weather_delay;
+        row.nas_delay = +row.nas_delay;
+        row.security_delay = +row.security_delay;
+        row.late_aircraft_delay = +row.late_aircraft_delay;
+        return row;
+    })
+]).then(([usMapData, flightData, delayDataRows, airlineDelayCauseData]) => {
+    let delayMap = new Map(delayDataRows.map(d => [d.iata, d.avg_delay]));
 
-    // Group flightData by iata
+    delayCausesData = airlineDelayCauseData;
+    window.delayCausesData = delayCausesData; // Make globally accessible
+
     let airportDataMap = d3.rollups(
         flightData,
         v => {
             let iata = v[0].iata;
-
             let hasDomestic = v.some(d => d.flight_type && d.flight_type.includes("Domestic"));
             let hasForeignToUS = v.some(d => d.flight_type && d.flight_type.includes("Foreign to US"));
             let hasUSToForeign = v.some(d => d.flight_type && d.flight_type.includes("US to Foreign"));
 
-            // Determine category
             let flight_category;
             if (hasForeignToUS || hasUSToForeign) {
                 flight_category = "International";
@@ -46,7 +70,6 @@ Promise.all([
             }
 
             let avg_delay = delayMap.get(iata) || 0;
-
             return {
                 name: v[0].name,
                 city: v[0].city,
@@ -67,12 +90,8 @@ Promise.all([
         .map(([iata, data]) => data === null ? null : ({ iata, ...data }))
         .filter(d => d !== null);
 
-    // Instantiate main map visualization
     new FlightsMap("flightMap", airportData, usMapData);
 
-    // Instantiate the smaller visualizations
-    delayCauses = new delayCauses('delayCauses', "data/Airline_Delay_Cause.csv");
-    routesFares = new routesFares('routesFares', "data/Routes_Fares.csv");
 }).catch(error => {
     console.error('Error loading data: ', error);
 });
