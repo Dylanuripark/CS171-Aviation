@@ -109,7 +109,7 @@ class arrivalDelayvsArrivals {
 
 
         vis.yScale.domain([0,d3.max(vis.monthInfo, d => d.averageDelay)]);
-        vis.yScaleRight.domain([d3.min(vis.monthInfo, d => d.totalFlights),d3.max(vis.monthInfo, d => d.totalFlights)]);
+        vis.yScaleRight.domain([d3.min(vis.monthInfo, d => d.totalFlights) - 100000,d3.max(vis.monthInfo, d => d.totalFlights)]);
 
 
         let path = vis.svg.selectAll(".line")
