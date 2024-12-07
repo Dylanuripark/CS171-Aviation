@@ -246,7 +246,7 @@ class FlightsMap {
 
         let colorScale = d3.scaleOrdinal()
             .domain(["Carrier", "Weather", "NAS", "Security", "Late Aircraft"])
-            .range(["#DCA11D", "#f2dab2", "#ebc78a", "#e4b45e", "#cfa76d"]);
+            .range(["#e4b45e", "#efddc4", "#ccbd9d", "#e4b45f", "#ebc78a"]);
 
         let pie = d3.pie().value(d => d.value);
         let arc = d3.arc().innerRadius(0).outerRadius(radius);
