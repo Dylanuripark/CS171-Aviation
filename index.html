@@ -1,3 +1,5 @@
+<!-- index.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,7 +46,6 @@
                         <option value="All">All Airports</option>
                         <option value="International">International Airports</option>
                         <option value="Domestic">Domestic Airports</option>
-                        <option value="Other">Other Airports</option>
                     </select>
                 </div>
             </div>
@@ -178,15 +179,14 @@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <h4 style="margin-bottom: 1vh">Analysis</h4>
-                <p>Delays seem to be the most common in the summer months when travel is at its peak. Although not a period that is particularly known for debilitating weather, it is interesting to note that the average weather delay time also went up in these months.</p>
+                <h4>Analysis</h4>
+                <p>Placeholder for future discussion.</p>
             </div>
             <div class="col-md-1"></div>
         </div>
     </div>
 
     <!--How long flight will be delayed-->
-
     <div class="section" id="section8">
         <div class="row">
             <div class="col-md-1"></div>
@@ -199,396 +199,23 @@
         <div class="row" style="margin-top: 2vh;">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <select id="airportChoice" class="form-select" onchange="delayDistVis.onSelectionChange()" style="width: 50%">
-                    <option value="all">All airports</option>
-                    <option value="ABR">Aberdeen Regional (ABR)</option>
-                    <option value="ABI">Abilene Regional (ABI)</option>
-                    <option value="SPI">Abraham Lincoln Capital (SPI)</option>
-                    <option value="ADK">Adak (ADK)</option>
-                    <option value="CAK">Akron-Canton Regional (CAK)</option>
-                    <option value="ALB">Albany International (ALB)</option>
-                    <option value="OAJ">Albert J Ellis (OAJ)</option>
-                    <option value="ABQ">Albuquerque International Sunport (ABQ)</option>
-                    <option value="AEX">Alexandria International (AEX)</option>
-                    <option value="APN">Alpena County Regional (APN)</option>
-                    <option value="ATW">Appleton International (ATW)</option>
-                    <option value="LBE">Arnold Palmer Regional (LBE)</option>
-                    <option value="AVL">Asheville Regional (AVL)</option>
-                    <option value="ASE">Aspen Pitkin County Sardy Field (ASE)</option>
-                    <option value="ACY">Atlantic City International (ACY)</option>
-                    <option value="AGS">Augusta Regional at Bush Field (AGS)</option>
-                    <option value="AUS">Austin - Bergstrom International (AUS)</option>
-                    <option value="BWI">Baltimore/Washington International Thurgood Marshall (BWI)</option>
-                    <option value="BGR">Bangor International (BGR)</option>
-                    <option value="BTR">Baton Rouge Metropolitan/Ryan Field (BTR)</option>
-                    <option value="BLI">Bellingham International (BLI)</option>
-                    <option value="BJI">Bemidji Regional (BJI)</option>
-                    <option value="BTM">Bert Mooney (BTM)</option>
-                    <option value="BET">Bethel Airport (BET)</option>
-                    <option value="LIT">Bill and Hillary Clinton Nat Adams Field (LIT)</option>
-                    <option value="BIL">Billings Logan International (BIL)</option>
-                    <option value="BHM">Birmingham-Shuttlesworth International (BHM)</option>
-                    <option value="BIH">Bishop Airport (BIH)</option>
-                    <option value="FNT">Bishop International (FNT)</option>
-                    <option value="BIS">Bismarck Municipal (BIS)</option>
-                    <option value="LEX">Blue Grass (LEX)</option>
-                    <option value="BUR">Bob Hope (BUR)</option>
-                    <option value="BOI">Boise Air Terminal (BOI)</option>
-                    <option value="BZN">Bozeman Yellowstone International (BZN)</option>
-                    <option value="BDL">Bradley International (BDL)</option>
-                    <option value="BRD">Brainerd Lakes Regional (BRD)</option>
-                    <option value="BRO">Brownsville South Padre Island International (BRO)</option>
-                    <option value="BQK">Brunswick Golden Isles (BQK)</option>
-                    <option value="BUF">Buffalo Niagara International (BUF)</option>
-                    <option value="BTV">Burlington International (BTV)</option>
-                    <option value="ACV">California Redwood Coast Humboldt County (ACV)</option>
-                    <option value="CNY">Canyonlands Regional (CNY)</option>
-                    <option value="HYA">Cape Cod Gateway (HYA)</option>
-                    <option value="LAN">Capital Region International (LAN)</option>
-                    <option value="CPR">Casper/Natrona County International (CPR)</option>
-                    <option value="CDC">Cedar City Regional (CDC)</option>
-                    <option value="BMI">Central Il Regional Airport at Bloomington (BMI)</option>
-                    <option value="GRI">Central Nebraska Regional (GRI)</option>
-                    <option value="CWA">Central Wisconsin (CWA)</option>
-                    <option value="RIW">Central Wyoming Regional (RIW)</option>
-                    <option value="STS">Charles M. Schulz - Sonoma County (STS)</option>
-                    <option value="CHS">Charleston AFB/International (CHS)</option>
-                    <option value="CLT">Charlotte Douglas International (CLT)</option>
-                    <option value="CHO">Charlottesville Albemarle (CHO)</option>
-                    <option value="TVC">Cherry Capital (TVC)</option>
-                    <option value="CYS">Cheyenne Regional/Jerry Olson Field (CYS)</option>
-                    <option value="MDW">Chicago Midway International (MDW)</option>
-                    <option value="ORD">Chicago O'Hare International (ORD)</option>
-                    <option value="RFD">Chicago/Rockford International (RFD)</option>
-                    <option value="CIU">Chippewa County International (CIU)</option>
-                    <option value="CVG">Cincinnati/Northern Kentucky International (CVG)</option>
-                    <option value="COS">City of Colorado Springs Municipal (COS)</option>
-                    <option value="CLE">Cleveland-Hopkins International (CLE)</option>
-                    <option value="EWN">Coastal Carolina Regional (EWN)</option>
-                    <option value="CAE">Columbia Metropolitan (CAE)</option>
-                    <option value="COU">Columbia Regional (COU)</option>
-                    <option value="CSG">Columbus Airport (CSG)</option>
-                    <option value="USA">Concord Padgett Regional (USA)</option>
-                    <option value="CRP">Corpus Christi International (CRP)</option>
-                    <option value="STT">Cyril E King (STT)</option>
-                    <option value="DAL">Dallas Love Field (DAL)</option>
-                    <option value="DFW">Dallas/Fort Worth International (DFW)</option>
-                    <option value="MSN">Dane County Regional-Truax Field (MSN)</option>
-                    <option value="HNL">Daniel K Inouye International (HNL)</option>
-                    <option value="DAB">Daytona Beach International (DAB)</option>
-                    <option value="SCC">Deadhorse Airport (SCC)</option>
-                    <option value="DEC">Decatur Airport (DEC)</option>
-                    <option value="DRT">Del Rio International (DRT)</option>
-                    <option value="ESC">Delta County (ESC)</option>
-                    <option value="DEN">Denver International (DEN)</option>
-                    <option value="DSM">Des Moines International (DSM)</option>
-                    <option value="DTW">Detroit Metro Wayne County (DTW)</option>
-                    <option value="DVL">Devils Lake Regional (DVL)</option>
-                    <option value="DIK">Dickinson - Theodore Roosevelt Regional (DIK)</option>
-                    <option value="DLG">Dillingham Airport (DLG)</option>
-                    <option value="DDC">Dodge City Regional (DDC)</option>
-                    <option value="DHN">Dothan Regional (DHN)</option>
-                    <option value="DLH">Duluth International (DLH)</option>
-                    <option value="DRO">Durango La Plata County (DRO)</option>
-                    <option value="EGE">Eagle County Regional (EGE)</option>
-                    <option value="GGG">East Texas Regional (GGG)</option>
-                    <option value="CLL">Easterwood Field (CLL)</option>
-                    <option value="VPS">Eglin AFB Destin Fort Walton Beach (VPS)</option>
-                    <option value="ELP">El Paso International (ELP)</option>
-                    <option value="EKO">Elko Regional (EKO)</option>
-                    <option value="KOA">Ellison Onizuka Kona International at Keahole (KOA)</option>
-                    <option value="ELM">Elmira/Corning Regional (ELM)</option>
-                    <option value="OMA">Eppley Airfield (OMA)</option>
-                    <option value="ERI">Erie International/Tom Ridge Field (ERI)</option>
-                    <option value="TOL">Eugene F Kranz Toledo Express (TOL)</option>
-                    <option value="EVV">Evansville Regional (EVV)</option>
-                    <option value="FAI">Fairbanks International (FAI)</option>
-                    <option value="INL">Falls International Einarson Field (INL)</option>
-                    <option value="FAY">Fayetteville Regional/Grannis Field (FAY)</option>
-                    <option value="FLG">Flagstaff Pulliam (FLG)</option>
-                    <option value="FLO">Florence Regional (FLO)</option>
-                    <option value="IMT">Ford (IMT)</option>
-                    <option value="FOD">Fort Dodge Regional (FOD)</option>
-                    <option value="FLL">Fort Lauderdale-Hollywood International (FLL)</option>
-                    <option value="FSM">Fort Smith Regional (FSM)</option>
-                    <option value="FWA">Fort Wayne International (FWA)</option>
-                    <option value="SPN">Francisco C. Ada Saipan International (SPN)</option>
-                    <option value="ROC">Frederick Douglass Grtr Rochester International (ROC)</option>
-                    <option value="FAT">Fresno Yosemite International (FAT)</option>
-                    <option value="SUN">Friedman Memorial (SUN)</option>
-                    <option value="GNV">Gainesville Regional (GNV)</option>
-                    <option value="GCK">Garden City Regional (GCK)</option>
-                    <option value="PIA">General Downing - Peoria International (PIA)</option>
-                    <option value="MKE">General Mitchell International (MKE)</option>
-                    <option value="IAH">George Bush Intercontinental/Houston (IAH)</option>
-                    <option value="GRR">Gerald R. Ford International (GRR)</option>
-                    <option value="FCA">Glacier Park International (FCA)</option>
-                    <option value="GTR">Golden Triangle Regional (GTR)</option>
-                    <option value="GFK">Grand Forks International (GFK)</option>
-                    <option value="GJT">Grand Junction Regional (GJT)</option>
-                    <option value="GTF">Great Falls International (GTF)</option>
-                    <option value="BGM">Greater Binghamton/Edwin A. Link Field (BGM)</option>
-                    <option value="GRB">Green Bay Austin Straubel International (GRB)</option>
-                    <option value="GSP">Greenville-Spartanburg International (GSP)</option>
-                    <option value="GUM">Guam International (GUM)</option>
-                    <option value="GPT">Gulfport-Biloxi International (GPT)</option>
-                    <option value="GUC">Gunnison-Crested Butte Regional (GUC)</option>
-                    <option value="GST">Gustavus Airport (GST)</option>
-                    <option value="HGR">Hagerstown Regional-Richard A. Henson Field (HGR)</option>
-                    <option value="MDT">Harrisburg International (MDT)</option>
-                    <option value="LAS">Harry Reid International (LAS)</option>
-                    <option value="ATL">Hartsfield-Jackson Atlanta International (ATL)</option>
-                    <option value="PIB">Hattiesburg-Laurel Regional (PIB)</option>
-                    <option value="HYS">Hays Regional (HYS)</option>
-                    <option value="FAR">Hector International (FAR)</option>
-                    <option value="HLN">Helena Regional (HLN)</option>
-                    <option value="STX">Henry E. Rohlsen (STX)</option>
-                    <option value="ITO">Hilo International (ITO)</option>
-                    <option value="HHH">Hilton Head Airport (HHH)</option>
-                    <option value="CMX">Houghton County Memorial (CMX)</option>
-                    <option value="HSV">Huntsville International-Carl T Jones Field (HSV)</option>
-                    <option value="IDA">Idaho Falls Regional (IDA)</option>
-                    <option value="IND">Indianapolis International (IND)</option>
-                    <option value="ITH">Ithaca Tompkins International (ITH)</option>
-                    <option value="BPT">Jack Brooks Regional (BPT)</option>
-                    <option value="JAC">Jackson Hole (JAC)</option>
-                    <option value="JAN">Jackson Medgar Wiley Evers International (JAN)</option>
-                    <option value="JAX">Jacksonville International (JAX)</option>
-                    <option value="DAY">James M Cox/Dayton International (DAY)</option>
-                    <option value="JMS">Jamestown Regional (JMS)</option>
-                    <option value="FSD">Joe Foss Field (FSD)</option>
-                    <option value="JFK">John F. Kennedy International (JFK)</option>
-                    <option value="CMH">John Glenn Columbus International (CMH)</option>
-                    <option value="JST">John Murtha Johnstown-Cambria County (JST)</option>
-                    <option value="SNA">John Wayne Airport-Orange County (SNA)</option>
-                    <option value="JLN">Joplin Regional (JLN)</option>
-                    <option value="TWF">Joslin Field - Magic Valley Regional (TWF)</option>
-                    <option value="JNU">Juneau International (JNU)</option>
-                    <option value="OGG">Kahului Airport (OGG)</option>
-                    <option value="AZO">Kalamazoo/Battle Creek International (AZO)</option>
-                    <option value="MCI">Kansas City International (MCI)</option>
-                    <option value="KTN">Ketchikan International (KTN)</option>
-                    <option value="MEI">Key Field (MEI)</option>
-                    <option value="EYW">Key West International (EYW)</option>
-                    <option value="AKN">King Salmon Airport (AKN)</option>
-                    <option value="ADQ">Kodiak Airport (ADQ)</option>
-                    <option value="LSE">La Crosse Regional (LSE)</option>
-                    <option value="LFT">Lafayette Regional Paul Fournet Field (LFT)</option>
-                    <option value="LGA">LaGuardia (LGA)</option>
-                    <option value="LCH">Lake Charles Regional (LCH)</option>
-                    <option value="LAR">Laramie Regional (LAR)</option>
-                    <option value="LRD">Laredo International (LRD)</option>
-                    <option value="LAW">Lawton-Fort Sill Regional (LAW)</option>
-                    <option value="HOB">Lea County Regional (HOB)</option>
-                    <option value="ABE">Lehigh Valley International (ABE)</option>
-                    <option value="LWS">Lewiston Nez Perce County (LWS)</option>
-                    <option value="LBL">Liberal Mid-America Regional (LBL)</option>
-                    <option value="LIH">Lihue Airport (LIH)</option>
-                    <option value="LNK">Lincoln Airport (LNK)</option>
-                    <option value="BOS">Logan International (BOS)</option>
-                    <option value="LGB">Long Beach Airport (LGB)</option>
-                    <option value="ISP">Long Island MacArthur (ISP)</option>
-                    <option value="LAX">Los Angeles International (LAX)</option>
-                    <option value="MSY">Louis Armstrong New Orleans International (MSY)</option>
-                    <option value="SDF">Louisville Muhammad Ali International (SDF)</option>
-                    <option value="CHA">Lovell Field (CHA)</option>
-                    <option value="LBB">Lubbock Preston Smith International (LBB)</option>
-                    <option value="SJU">Luis Munoz Marin International (SJU)</option>
-                    <option value="LYH">Lynchburg Regional/Preston Glenn Field (LYH)</option>
-                    <option value="EUG">Mahlon Sweet Field (EUG)</option>
-                    <option value="MHT">Manchester Boston Regional (MHT)</option>
-                    <option value="MHK">Manhattan Regional (MHK)</option>
-                    <option value="MQT">Marquette Sawyer Regional (MQT)</option>
-                    <option value="MVY">Martha's Vineyard Airport (MVY)</option>
-                    <option value="MCW">Mason City Municipal (MCW)</option>
-                    <option value="MBS">MBS International (MBS)</option>
-                    <option value="MFE">McAllen International (MFE)</option>
-                    <option value="MFE">McAllen Miller International (MFE)</option>
-                    <option value="TYS">McGhee Tyson (TYS)</option>
-                    <option value="BFL">Meadows Field (BFL)</option>
-                    <option value="MLB">Melbourne Orlando International (MLB)</option>
-                    <option value="MEM">Memphis International (MEM)</option>
-                    <option value="PSE">Mercedita (PSE)</option>
-                    <option value="CDV">Merle K Mudhole Smith (CDV)</option>
-                    <option value="OAK">Metro Oakland International (OAK)</option>
-                    <option value="MIA">Miami International (MIA)</option>
-                    <option value="MAF">Midland International Air and Space Port (MAF)</option>
-                    <option value="MSP">Minneapolis-St Paul International (MSP)</option>
-                    <option value="MOT">Minot International (MOT)</option>
-                    <option value="MSO">Missoula Montana (MSO)</option>
-                    <option value="MOB">Mobile Regional (MOB)</option>
-                    <option value="MLU">Monroe Regional (MLU)</option>
-                    <option value="MRY">Monterey Regional (MRY)</option>
-                    <option value="MGM">Montgomery Regional (MGM)</option>
-                    <option value="MTJ">Montrose Regional (MTJ)</option>
-                    <option value="MYR">Myrtle Beach International (MYR)</option>
-                    <option value="ACK">Nantucket Memorial (ACK)</option>
-                    <option value="BNA">Nashville International (BNA)</option>
-                    <option value="SWF">New York Stewart International (SWF)</option>
-                    <option value="EWR">Newark Liberty International (EWR)</option>
-                    <option value="PHF">Newport News/Williamsburg International (PHF)</option>
-                    <option value="IAG">Niagara Falls International (IAG)</option>
-                    <option value="OME">Nome Airport (OME)</option>
-                    <option value="ORF">Norfolk International (ORF)</option>
-                    <option value="SJC">Norman Y. Mineta San Jose International (SJC)</option>
-                    <option value="CKB">North Central West Virginia (CKB)</option>
-                    <option value="LBF">North Platte Regional Airport Lee Bird Field (LBF)</option>
-                    <option value="GCC">Northeast Wyoming Regional (GCC)</option>
-                    <option value="XNA">Northwest Arkansas National (XNA)</option>
-                    <option value="ECP">Northwest Florida Beaches International (ECP)</option>
-                    <option value="ONT">Ontario International (ONT)</option>
-                    <option value="MCO">Orlando International (MCO)</option>
-                    <option value="SFB">Orlando Sanford International (SFB)</option>
-                    <option value="OWB">Owensboro Daviess County Regional (OWB)</option>
-                    <option value="PPG">Pago Pago International (PPG)</option>
-                    <option value="PBI">Palm Beach International (PBI)</option>
-                    <option value="PSP">Palm Springs International (PSP)</option>
-                    <option value="EAT">Pangborn Memorial (EAT)</option>
-                    <option value="PLN">Pellston Regional Airport of Emmet County (PLN)</option>
-                    <option value="PNS">Pensacola International (PNS)</option>
-                    <option value="PSG">Petersburg James A Johnson (PSG)</option>
-                    <option value="PHL">Philadelphia International (PHL)</option>
-                    <option value="AZA">Phoenix - Mesa Gateway (AZA)</option>
-                    <option value="PHX">Phoenix Sky Harbor International (PHX)</option>
-                    <option value="GSO">Piedmont Triad International (GSO)</option>
-                    <option value="PGV">Pitt Greenville (PGV)</option>
-                    <option value="PIT">Pittsburgh International (PIT)</option>
-                    <option value="PBG">Plattsburgh International (PBG)</option>
-                    <option value="PIH">Pocatello Regional (PIH)</option>
-                    <option value="PDX">Portland International (PDX)</option>
-                    <option value="PWM">Portland International Jetport (PWM)</option>
-                    <option value="PSM">Portsmouth International at Pease (PSM)</option>
-                    <option value="PRC">Prescott Regional Ernest A Love Field (PRC)</option>
-                    <option value="PQI">Presque Isle International (PQI)</option>
-                    <option value="PVU">Provo Municipal (PVU)</option>
-                    <option value="PUB">Pueblo Memorial (PUB)</option>
-                    <option value="PUW">Pullman Moscow Regional (PUW)</option>
-                    <option value="PGD">Punta Gorda Airport (PGD)</option>
-                    <option value="MLI">Quad Cities International (MLI)</option>
-                    <option value="BQN">Rafael Hernandez (BQN)</option>
-                    <option value="RDU">Raleigh-Durham International (RDU)</option>
-                    <option value="OTZ">Ralph Wien Memorial (OTZ)</option>
-                    <option value="HIB">Range Regional (HIB)</option>
-                    <option value="RAP">Rapid City Regional (RAP)</option>
-                    <option value="RDD">Redding Municipal (RDD)</option>
-                    <option value="RDD">Redding Regional (RDD)</option>
-                    <option value="RNO">Reno/Tahoe International (RNO)</option>
-                    <option value="RHI">Rhinelander/Oneida County (RHI)</option>
-                    <option value="PVD">Rhode Island Tf Green International (PVD)</option>
-                    <option value="RIC">Richmond International (RIC)</option>
-                    <option value="AMA">Rick Husband Amarillo International (AMA)</option>
-                    <option value="LCK">Rickenbacker International (LCK)</option>
-                    <option value="ROA">Roanoke Blacksburg Regional (ROA)</option>
-                    <option value="GRK">Robert Gray AAF (GRK)</option>
-                    <option value="RDM">Roberts Field (RDM)</option>
-                    <option value="RST">Rochester International (RST)</option>
-                    <option value="MFR">Rogue Valley International - Medford (MFR)</option>
-                    <option value="DCA">Ronald Reagan Washington National (DCA)</option>
-                    <option value="ROW">Roswell Air Center (ROW)</option>
-                    <option value="SMF">Sacramento International (SMF)</option>
-                    <option value="SLN">Salina Regional (SLN)</option>
-                    <option value="SBY">Salisbury-Ocean City/Wicomico Regional (SBY)</option>
-                    <option value="SLC">Salt Lake City International (SLC)</option>
-                    <option value="SJT">San Angelo Regional/Mathis Field (SJT)</option>
-                    <option value="SAT">San Antonio International (SAT)</option>
-                    <option value="SAN">San Diego International (SAN)</option>
-                    <option value="SFO">San Francisco International (SFO)</option>
-                    <option value="SBP">San Luis County Regional (SBP)</option>
-                    <option value="SBA">Santa Barbara Municipal (SBA)</option>
-                    <option value="SAF">Santa Fe Municipal (SAF)</option>
-                    <option value="SMX">Santa Maria Public/Capt. G. Allan Hancock Field (SMX)</option>
-                    <option value="SRQ">Sarasota/Bradenton International (SRQ)</option>
-                    <option value="SAV">Savannah/Hilton Head International (SAV)</option>
-                    <option value="MQT">Sawyer International (MQT)</option>
-                    <option value="BLV">Scott AFB MidAmerica St Louis (BLV)</option>
-                    <option value="SEA">Seattle/Tacoma International (SEA)</option>
-                    <option value="SPS">Sheppard AFB/Wichita Falls Municipal (SPS)</option>
-                    <option value="SHR">Sheridan County (SHR)</option>
-                    <option value="SHV">Shreveport Regional (SHV)</option>
-                    <option value="SUX">Sioux Gateway Brig Gen Bud Day Field (SUX)</option>
-                    <option value="SIT">Sitka Rocky Gutierrez (SIT)</option>
-                    <option value="PAE">Snohomish County (PAE)</option>
-                    <option value="SBN">South Bend International (SBN)</option>
-                    <option value="RSW">Southwest Florida International (RSW)</option>
-                    <option value="ABY">Southwest Georgia Regional (ABY)</option>
-                    <option value="OTH">Southwest Oregon Regional (OTH)</option>
-                    <option value="RKS">Southwest Wyoming Regional (RKS)</option>
-                    <option value="GEG">Spokane International (GEG)</option>
-                    <option value="SGF">Springfield-Branson National (SGF)</option>
-                    <option value="SGU">St George Regional (SGU)</option>
-                    <option value="STL">St Louis Lambert International (STL)</option>
-                    <option value="PIE">St Pete Clearwater International (PIE)</option>
-                    <option value="STC">St. Cloud Regional (STC)</option>
-                    <option value="SWO">Stillwater Regional (SWO)</option>
-                    <option value="SCK">Stockton Metro (SCK)</option>
-                    <option value="SYR">Syracuse Hancock International (SYR)</option>
-                    <option value="TLH">Tallahassee International (TLH)</option>
-                    <option value="TPA">Tampa International (TPA)</option>
-                    <option value="ANC">Ted Stevens Anchorage International (ANC)</option>
-                    <option value="TXK">Texarkana Regional-Webb Field (TXK)</option>
-                    <option value="CID">The Eastern Iowa (CID)</option>
-                    <option value="TTN">Trenton Mercer (TTN)</option>
-                    <option value="PSC">Tri Cities (PSC)</option>
-                    <option value="TRI">Tri Cities (TRI)</option>
-                    <option value="HTS">Tri-State/Milton J. Ferguson Field (HTS)</option>
-                    <option value="TUS">Tucson International (TUS)</option>
-                    <option value="TUL">Tulsa International (TUL)</option>
-                    <option value="TYR">Tyler Pounds Regional (TYR)</option>
-                    <option value="CMI">University of Illinois/Willard (CMI)</option>
-                    <option value="SCE">University Park (SCE)</option>
-                    <option value="VLD">Valdosta Regional (VLD)</option>
-                    <option value="HRL">Valley International (HRL)</option>
-                    <option value="VEL">Vernal Regional (VEL)</option>
-                    <option value="VCT">Victoria Regional (VCT)</option>
-                    <option value="ACT">Waco Regional (ACT)</option>
-                    <option value="ALW">Walla Walla Regional (ALW)</option>
-                    <option value="IAD">Washington Dulles International (IAD)</option>
-                    <option value="ALO">Waterloo Regional (ALO)</option>
-                    <option value="ART">Watertown International (ART)</option>
-                    <option value="CRW">West Virginia International Yeager (CRW)</option>
-                    <option value="HPN">Westchester County (HPN)</option>
-                    <option value="BFF">Western Neb. Regional/William B. Heilig Field (BFF)</option>
-                    <option value="ICT">Wichita Dwight D Eisenhower National (ICT)</option>
-                    <option value="BRW">Wiley Post/Will Rogers Memorial (BRW)</option>
-                    <option value="AVP">Wilkes Barre Scranton International (AVP)</option>
-                    <option value="OKC">Will Rogers World (OKC)</option>
-                    <option value="HOU">William P Hobby (HOU)</option>
-                    <option value="XWA">Williston Basin International (XWA)</option>
-                    <option value="ILM">Wilmington International (ILM)</option>
-                    <option value="ORH">Worcester Regional (ORH)</option>
-                    <option value="WRG">Wrangell Airport (WRG)</option>
-                    <option value="YKM">Yakima Air Terminal/McAllister Field (YKM)</option>
-                    <option value="YAK">Yakutat Airport (YAK)</option>
-                    <option value="HDN">Yampa Valley (HDN)</option>
-                    <option value="WYS">Yellowstone (WYS)</option>
-                    <option value="COD">Yellowstone Regional (COD)</option>
-                    <option value="YUM">Yuma MCAS/Yuma International (YUM)</option>
-                </select>
-
-                <select id="airlineChoice" class="form-select" onchange="delayDistVis.onSelectionChange()" style="width: 20%">
-                    <option value="all">All airlines</option>
-                    <option value="Air Wisconsin Airlines Corp">Air Wisconsin</option>
-                    <option value="Alaska Airlines Network">Alaska</option>
-                    <option value="Allegiant Air">Allegiant</option>
-                    <option value="American Airlines Network">American</option>
-                    <option value="CommuteAir LLC dba CommuteAir">CommuteAir</option>
-                    <option value="Delta Air Lines Network">Delta</option>
-                    <option value="Endeavor Air Inc.">Endeavor</option>
-                    <option value="Envoy Air">Envoy</option>
-                    <option value="Frontier Airlines">Frontier</option>
-                    <option value="Hawaiian Airlines Network">Hawaiian</option>
-                    <option value="Horizon Air">Horizon</option>
-                    <option value="JetBlue Airways">JetBlue</option>
-                    <option value="Mesa Airlines Inc.">Mesa</option>
-                    <option value="PSA Airlines Inc.">PSA</option>
-                    <option value="Piedmont Airlines">Piedmont</option>
-                    <option value="Republic Airline">Republic</option>
-                    <option value="SkyWest Airlines Inc.">SkyWest</option>
-                    <option value="Southwest Airlines">Southwest</option>
-                    <option value="Spirit Airlines">Spirit</option>
-                    <option value="United Air Lines Network">United</option>
-                    <option value="GoJet Airlines LLC d/b/a United Express">United Express</option>
-                </select>
+                <!-- Airport and Airline Dropdowns -->
+                <div class="d-flex gap-3 mb-3">
+                    <div class="form-group">
+                        <label for="airportChoice">Select Airport:</label>
+                        <select id="airportChoice" class="form-select" style="width: 50%">
+                            <option value="all">All airports</option>
+                            <!-- Options will be populated dynamically -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="airlineChoice">Select Airline:</label>
+                        <select id="airlineChoice" class="form-select" style="width: 50%">
+                            <option value="all">All airlines</option>
+                            <!-- Options will be populated dynamically -->
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="col-md-1"></div>
         </div>
@@ -660,13 +287,14 @@
     });
 </script>
 <!-- OWN JS -->
-
+<script src="js/delayDist.js"></script>
 <script src="js/flightMap.js"></script>
 <script src="js/delaysByCarrier.js"></script>
 <script src="js/jetblue.js"></script>
 <script src="js/delayByMonths.js"></script>
-<script src="js/delayDist.js"></script>
 <script src="js/main.js"></script>
+
+
 
 </body>
 </html>

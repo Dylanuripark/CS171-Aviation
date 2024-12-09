@@ -1,8 +1,14 @@
+// main.js
+
 let parseDate = d3.timeParse("%Y");
 
 let flightDataGlobal;
-let delayCausesData; // We'll store this globally
+let delayCausesData;
 let histData;
+let flightMapVis;
+let delaysByCarrierVis;
+let delayDistVis;
+let delayByMonthsVis; // For the months visualization
 
 Promise.all([
     d3.json("data/us-states.json"),
@@ -12,7 +18,7 @@ Promise.all([
             iata: row.iata,
             name: airportSplit.length > 1 ? airportSplit[1].trim() : (row.Airport ? row.Airport.trim() : ""),
             city: airportSplit.length > 1 ? airportSplit[1].trim() : "",
-            state: airportSplit.length > 0 ? airportSplit[0].trim() : "",
+            state: airportSplit.length > 1 ? airportSplit[0].trim() : "",
             latitude: row.latitude ? +row.latitude : null,
             longitude: row.longitude ? +row.longitude : null,
             flight_type: row[" Flight Type"] ? row[" Flight Type"].trim() : "",
@@ -27,7 +33,7 @@ Promise.all([
         avg_delay: +d.avg_delay
     })),
     d3.csv("data/Airline_Delay_Cause.csv", row => {
-        row.year  = parseDate(row.year);
+        row.year = parseDate(row.year);
         row.month = +row.month;
         row.arr_flights = +row.arr_flights;
         row.arr_del15 = +row.arr_del15;
@@ -47,11 +53,17 @@ Promise.all([
         return row;
     })
 ]).then(([usMapData, flightData, delayDataRows, airlineDelayCauseData]) => {
+
+    // Global assignment
+    flightDataGlobal = flightData;
+    delayCausesData = airlineDelayCauseData;
+    window.delayCausesData = delayCausesData;
+    window.airportData = flightData;
+
+    // Build a map from delay_data for avg_delay
     let delayMap = new Map(delayDataRows.map(d => [d.iata, d.avg_delay]));
 
-    delayCausesData = airlineDelayCauseData;
-    window.delayCausesData = delayCausesData; // Make globally accessible
-
+    // Aggregate data by airport
     let airportDataMap = d3.rollups(
         flightData,
         v => {
@@ -70,6 +82,7 @@ Promise.all([
             }
 
             let avg_delay = delayMap.get(iata) || 0;
+
             return {
                 name: v[0].name,
                 city: v[0].city,
@@ -90,62 +103,46 @@ Promise.all([
         .map(([iata, data]) => data === null ? null : ({ iata, ...data }))
         .filter(d => d !== null);
 
-    new FlightsMap("flightMap", airportData, usMapData);
+    // Instantiate FlightsMap
+    flightMapVis = new FlightsMap("flightMap", airportData, usMapData);
+
+    // Load additional data for the other visualizations
+    // Carriers data for delaysByCarrier
+    d3.csv("data/carriers.csv", row => {
+        row.carrier_delay = +row.carrier_delay;
+        row.late_aircraft_delay = +row.late_aircraft_delay;
+        row.nas_delay = +row.nas_delay;
+        row.weather_delay = +row.weather_delay;
+        return row;
+    }).then(carriersCSV => {
+        delaysByCarrierVis = new delaysByCarrier('delaysByCarrier', carriersCSV);
+    }).catch(error => {
+        console.error('Error loading carriers.csv: ', error);
+    });
+
+    // avg_delays and hist data for delayDist
+    Promise.all([
+        d3.csv("data/avg_delays.csv", row => {
+            row.arr_delay = +row.arr_delay;
+            row.arr_flights = +row.arr_flights;
+            row.avg_delay = +row.avg_delay;
+            return row;
+        }),
+        d3.csv("data/hist.csv", row => {
+            row.count = +row.count;
+            return row;
+        })
+    ]).then(([avgDelayData, histDataLoaded]) => {
+        histData = histDataLoaded;
+        delayDistVis = new delayDist('delayDist', avgDelayData, histData, flightDataGlobal);
+    }).catch(error => {
+        console.error('Error loading avg_delays.csv or hist.csv: ', error);
+    });
+
+    // delayByMonths uses airlineDelayCauseData directly
+    // If you want to instantiate delayByMonths:
+    delayByMonthsVis = new delayByMonths('delaybyMonths', airlineDelayCauseData);
 
 }).catch(error => {
     console.error('Error loading data: ', error);
-});
-
-let carrierData;
-d3.csv("data/carriers.csv", row => {
-    row.carrier_delay = +row.carrier_delay;
-    row.late_aircraft_delay = +row.late_aircraft_delay;
-    row.nas_delay = +row.nas_delay;
-    row.weather_delay = +row.weather_delay;
-    return row;
-}).then(csv => {
-    carrierData = csv;
-    delaysByCarrier = new delaysByCarrier('delaysByCarrier', carrierData);
-});
-
-let delayData;
-d3.csv("data/Airline_Delay_Cause.csv", row => {
-    row.year  = parseDate(row.year);
-    row.month = +row.month;
-    row.arr_flights = +row.arr_flights;
-    row.arr_del15 = +row.arr_del15;
-    row.carrier_ct = +row.carrier_ct;
-    row.weather_ct = +row.weather_ct;
-    row.nas_ct = +row.nas_ct;
-    row.security_ct = +row.security_ct;
-    row.late_aircraft_ct = +row.late_aircraft_ct;
-    row.arr_cancelled = +row.arr_cancelled;
-    row.arr_diverted = +row.arr_diverted;
-    row.arr_delay = +row.arr_delay;
-    row.carrier_delay = +row.carrier_delay;
-    row.weather_delay = +row.weather_delay;
-    row.nas_delay = +row.nas_delay;
-    row.security_delay = +row.security_delay;
-    row.late_aircraft_delay = +row.late_aircraft_delay;
-    return row;
-}).then(csv => {
-    delayData = csv;
-    delayByMonths = new delayByMonths('delaybyMonths', delayData);
-});
-
-let avgDelayData;
-d3.csv("data/avg_delays.csv", row => {
-    row.arr_delay = +row.arr_delay;
-    row.arr_flights = +row.arr_flights;
-    row.avg_delay = +row.avg_delay;
-    return row;
-}).then(csv => {
-    avgDelayData = csv;
-    d3.csv("data/hist.csv", row => {
-        row.count = +row.count;
-        return row;
-    }).then(csv => {
-        histData = csv;
-        delayDistVis = new delayDist('delayDist', avgDelayData, histData);
-    });
 });
