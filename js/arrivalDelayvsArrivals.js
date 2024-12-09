@@ -13,7 +13,7 @@ class arrivalDelayvsArrivals {
 
         let size = document.getElementById(vis.parentContainer).getBoundingClientRect();
 
-        vis.margin ={top: 50, right: 50, bottom: 0, left: 100};
+        vis.margin ={top: 50, right: 50, bottom: 0, left: 80};
         vis.width = size.width - vis.margin.left - vis.margin.right;
         vis.height = 500 - vis.margin.top - vis.margin.bottom;
 
@@ -30,7 +30,7 @@ class arrivalDelayvsArrivals {
 
         vis.xScale = d3.scalePoint()
             .domain(d3.range(1,13))
-            .range([vis.margin.left,vis.width])
+            .range([vis.margin.left,vis.width + 20])
 
         vis.yScale = d3.scaleLinear()
             .range([vis.height,vis.margin.top])
@@ -123,7 +123,8 @@ class arrivalDelayvsArrivals {
             .attr("class", "line")
             .merge(path)
             .attr("d", line)
-            .attr('stroke', 'steelblue')
+            .attr('stroke', 'indianred')
+            .attr("stroke-width", 4)
             .attr("fill", 'none')
 
         path.exit().remove()
@@ -140,6 +141,7 @@ class arrivalDelayvsArrivals {
             .merge(flights)
             .attr("d", flight)
             .attr('stroke', 'orange')
+            .attr("stroke-width", 4)
             .attr("fill", 'none');
 
         flights.exit().remove();
@@ -156,12 +158,12 @@ class arrivalDelayvsArrivals {
             .call(d3.axisLeft(vis.yScale));
 
         vis.svg.select(".y-axis-right")
-            .attr("transform", `translate(${vis.width}, 0)`)
+            .attr("transform", `translate(${vis.width + 20}, 0)`)
             .call(d3.axisRight(vis.yScaleRight));
 
         vis.svg.append("text")
             .attr("class", "axis-text")
-            .attr("transform", `translate(${vis.width + 60}, ${vis.height / 2}) rotate(90)`)
+            .attr("transform", `translate(${vis.width + 90}, ${vis.height / 2}) rotate(90)`)
             .style("text-anchor", "middle")
             .text("Total Flights");
 

@@ -23,7 +23,7 @@ class delayByMonths {
 
         let size = document.getElementById(vis.parentContainer).getBoundingClientRect();
 
-        vis.margin ={top: 50, right: 50, bottom: 0, left: 100};
+        vis.margin ={top: 30, right: 50, bottom: 0, left: 60};
         vis.width = size.width - vis.margin.left - vis.margin.right;
         vis.height = 500 - vis.margin.top - vis.margin.bottom;
 
@@ -48,7 +48,7 @@ class delayByMonths {
 
         vis.xScale = d3.scalePoint()
             .domain(d3.range(1,13))
-            .range([vis.margin.left,vis.width])
+            .range([vis.margin.left,vis.width + vis.margin.left])
 
         vis.yScale = d3.scaleLinear()
             .range([vis.height,vis.margin.top])
@@ -188,6 +188,7 @@ class delayByMonths {
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
         vis.svg.select(".x-axis")
+            .style("font-size", "0.8em")
             .attr("transform", `translate(0,${vis.height})`)
             .call(d3.axisBottom(vis.xScale)
                 .tickFormat(d => monthNames[d - 1]));
@@ -198,7 +199,7 @@ class delayByMonths {
 
         vis.svg.append("text")
             .attr("class", "axis-text")
-            .attr("transform", `translate(${vis.margin.left / 2}, ${vis.height / 2}) rotate(-90)`)
+            .attr("transform", `translate(${vis.margin.left / 3}, ${vis.height / 2}) rotate(-90)`)
             .style("text-anchor", "middle")
             .text("Average delay (min)")
 

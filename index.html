@@ -35,7 +35,7 @@
             <div class="col-md-1"></div>
             <div class="col-md-7">
                 <h2>The Airports of the Americas</h2>
-                <h4>The busiest and most delayed airports in America</h4>
+                <h5>The busiest and most delayed airports in America</h5>
             </div>
             <div class="col-md-3">
                 <div class="filter-container">
@@ -67,8 +67,8 @@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <h1>Delays come in many forms</h1>
-                <h4>How America's top airlines compare in the reasons for their delays</h4>
+                <h2>Delays come in many forms</h2>
+                <h5>How America's top airlines compare in the reasons for their delays</h5>
                 <div class="legend">
                     <p class="legend-var" style="margin-right: 20px">Reason for delay</p>
                     <div class="square" style="background-color: #DCA11D"></div>
@@ -76,7 +76,7 @@
                     <div class="square" style="background-color: #e4b45e"></div>
                     <p class="legend-var">Late aircraft</p>
                     <div class="square" style="background-color: #ebc78a"></div>
-                    <p class="legend-var">National Airspace System*</p>
+                    <p class="legend-var">National Airspace System (NAS)*</p>
                     <div class="square" style="background-color: #f2dab2"></div>
                     <p class="legend-var">Weather</p>
                 </div>
@@ -87,7 +87,7 @@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <div id="delaysByCarrier"></div>
+                <div id="delaysByCarrier" style="height: 65vh;"></div>
                 <p style="font-size: 0.8em"> *Non-extreme weather, airport operations, air traffic control, etc.</p>
             </div>
             <div class="col-md-1"></div>
@@ -98,9 +98,27 @@
     <div class="section" id="section3">
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <h4>Analysis</h4>
-                <p>The top three airlines for average delays in the US are low-cost airlines. Interestingly, these low-cost airlines are followed by American, United, and Delta, the three largest airlines in the US.</p>
+            <div class="col-md-10" style="font-family: Helvetica">
+                <p>The plot above details carriers’ arrival delay performance, segmented by cause:</p>
+                <ul>
+                    <li>Carrier delay (a delay under the carrier’s control, such as maintenance or loading baggage);</li>
+                    <li>Late aircraft delay (caused by the plane’s late arrival at a previous airport);</li>
+                    <li>NAS delay (caused by the FAA’s National Airspace System);</li>
+                    <li>and weather (generally extreme conditions).</li>
+                </ul>
+                <p>
+                    JetBlue leads – or trails – major carriers in the U.S. in terms of all delays, with delayed JetBlue flights experiencing an average of over 25 minutes in holdups.
+                    <b>Low-cost airlines</b> are particularly notorious for their delays: the second- and third-most delayed airlines are Frontier and Spirit, and Spirit has the most late aircraft delays of any airline.
+                    (Note that JetBlue can also be classified as a low-cost carrier in many respects.)
+                </p>
+                <p>
+                    The country’s three biggest airlines – American, United, and Delta – are middling in terms of their delay performance.
+                    Alaska Airlines is the U.S.’s least-delayed airline, with an impressive average delay of just 9.6 minutes.
+                </p>
+                <p>
+                    This highlights an astounding fact: JetBlue’s average carrier delay of 10.5 minutes is longer than the entirety of the average Alaska Airlines holdup.
+                    Below, take a closer look at how JetBlue’s delayed flights compare to those of other airlines.
+                </p>
             </div>
             <div class="col-md-1"></div>
         </div>
@@ -111,7 +129,7 @@
             <div class="col-md-1"></div>
             <div class="col-md-10">
                 <h2>JetBlue: America's most delayed airline</h2>
-                <h4>Comparisons to all other airlines</h4>
+                <h5>Comparisons to all other airlines</h5>
             </div>
             <div class="col-md-1"></div>
         </div>
@@ -168,6 +186,16 @@
             <div class="col-md-1"></div>
             <div class="col-md-10">
                 <h2>How delays change by the months</h2>
+                <div class="legend">
+                    <div class="square" style="background-color: #DCA11D; margin-left: 0;"></div>
+                    <p class="legend-var">Carrier</p>
+                    <div class="square" style="background-color: #e4b45e"></div>
+                    <p class="legend-var">Late aircraft</p>
+                    <div class="square" style="background-color: #ebc78a"></div>
+                    <p class="legend-var">NAS</p>
+                    <div class="square" style="background-color: #f2dab2"></div>
+                    <p class="legend-var">Weather</p>
+                </div>
                 <div class="row" id="delaybyMonths"></div>
             </div>
             <div class="col-md-1"></div>
@@ -180,9 +208,9 @@
             <div class="col-md-10">
                 <h2>Does flight traffic affect delays?</h2>
                 <div class="legend">
-                    <div class="square" style="background-color: orange; opacity: 0.8"></div>
+                    <div class="square" style="background-color: orange; opacity: 0.8; margin-left: 0;"></div>
                     <p class="legend-var">Total flights</p>
-                    <div class="square" style="background-color: steelblue; opacity: 0.8"></div>
+                    <div class="square" style="background-color: indianred; opacity: 0.8"></div>
                     <p class="legend-var">Average Delay (min)</p>
                 </div>
                 <div class="row" id="arrivalDelayvsArrivals"></div>
@@ -208,8 +236,8 @@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <h1>How much can you expect to be delayed?</h1>
-                <h4>See how the average delay of any combination of airport and airline compares to the overall distribution</h4>
+                <h2>How much can you expect to be delayed?</h2>
+                <h5>See how the average delay of any combination of airport and airline compares to the overall distribution</h5>
             </div>
             <div class="col-md-1"></div>
         </div>
@@ -612,7 +640,7 @@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <div id="delayDist"></div>
+                <div id="delayDist" style="height: 65vh;"></div>
             </div>
             <div class="col-md-1"></div>
         </div>

@@ -24,10 +24,10 @@ class delayDist {
     initVis() {
         let vis = this;
 
-        vis.margin = { top: 20, right: 20, bottom: 50, left: 80 };
+        vis.margin = { top: 50, right: 20, bottom: 50, left: 80 };
 
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right,
-            vis.height = 500 - vis.margin.top - vis.margin.bottom;
+            vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
 
         // SVG drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -107,6 +107,7 @@ class delayDist {
             .attr("y", -50)
             .style("transform", "rotate(-90deg)")
             .style("text-anchor", "middle")
+            .style("font-size", "1em")
             .text("Number of airport-airline combinations");
         vis.svg.append("text")
             .attr("class", "axis-text")
