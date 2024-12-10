@@ -375,9 +375,6 @@ class delayDist {
             .attr("class", "x-axis axis")
             .attr("transform", "translate(0," + vis.height + ")")
             .call(vis.xAxis)
-            .selectAll("text")
-            .attr("transform", "rotate(-45)")
-            .style("text-anchor", "end");
 
         vis.svg.append("g")
             .attr("class", "y-axis axis")
