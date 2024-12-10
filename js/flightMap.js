@@ -17,8 +17,7 @@ class FlightsMap {
         vis.width = size.width - vis.margin.left - vis.margin.right;
         vis.height = 500 - vis.margin.top - vis.margin.bottom;
 
-        vis.svg = d3.select("#" + vis.parentContainer)
-            .append("svg")
+        vis.svg = d3.select("#" + vis.parentContainer).append("svg")
             .attr("width", vis.width + vis.margin.left + vis.margin.right)
             .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
             .append("g")
@@ -57,6 +56,11 @@ class FlightsMap {
 
         vis.svg.call(vis.zoom);
         vis.updateVis();
+
+        // **Attach event listener to the airport type dropdown**
+        d3.select("#airportTypeSelect").on("change", function() {
+            vis.updateVis();
+        });
     }
 
     updateVis() {
@@ -178,6 +182,9 @@ class FlightsMap {
         vis.createLegend();
     }
 
+    /*
+     * Create Legend
+     */
     createLegend() {
         let vis = this;
 
@@ -216,6 +223,9 @@ class FlightsMap {
             });
     }
 
+    /*
+     * Get Delay Causes Chart (as an inline SVG string)
+     */
     getDelayCausesChart(iata) {
         // Access global delayCausesData loaded in main.js
         let airportData = window.delayCausesData.filter(d => d.airport === iata);
