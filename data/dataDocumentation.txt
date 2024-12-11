@@ -35,4 +35,37 @@ nas_delay: minutes of delay attributed to NAS delays
 security_delays: minutes of delay attributed to security delays
 late_aircraft_delay: minutes of delay attributed to late aircraft delays
 
+In delay_data_full.csv:
+Date: day and month
+airport: IATA airport and location city
+Flight Type: domestic, US to International, International to US
+Departures: number of departure flights
+Arrivals: number of arrival flights
+Total Operations: number of departure and arrival flights
+Departure Seats: number of people who departed from the airport
+Average Departure Seats: number of people on average from each departure flight
+Arrival Seats: number of people who arrived to the airport
+Average Arrival Seats: number of people on average from each arrival flight
+iata: IATA code
+latitude: latitude for map plot
+longitude: longitude for map plot
+airport: IATA code
+airport_name: airport location and name
+carrier_name: name of airline
+arr_delay: minutes of total delay
+arr_flights: number of flights arriving
+avg_delay: arr_delay over arr_flights
 
+In histogram_data.csv:
+range: range of minutes of average delay
+count: number of airline and airport combinations
+
+In map_avg_delays.csv:
+airport: the IATA airport code
+airport_name: The location and full name of the airport
+carrier_name: name of airline
+arr_delay: minutes difference between estimated arrival and actual arrival
+arr_flights: number of flights total
+avg_delay: arr_delay over arr_flights
+longitude: longitude for map plot
+latitude: latitude for map plot
