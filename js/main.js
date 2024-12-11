@@ -22,13 +22,13 @@ let arrivalDelayvsArrivalsVis;
 
 Promise.all([
     d3.json("data/us-states.json"),
-    d3.csv("data/avg_delay.csv"),
-    d3.csv("data/Airline_Delay_Cause.csv")
+    d3.csv("data/map_avg_delay.csv"),
+    d3.csv("data/delay_causes.csv")
 ]).then(([usMapData, avgDelayData, airlineDelayCauseData]) => {
 
 
 /*
-    * Aggregate avg_delay by airport from avg_delay.csv
+    * Aggregate avg_delay by airport from map_avg_delay.csv
     * Summation of arr_delay and arr_flights across carriers for each airport
 */
 
@@ -55,7 +55,7 @@ Promise.all([
 
 
 /*
-    * Aggregate delay causes for tooltip charts from Airline_Delay_Cause.csv
+    * Aggregate delay causes for tooltip charts from delay_causes.csv
 */
 
     let delayCauseAgg = d3.rollup(
@@ -86,10 +86,10 @@ Promise.all([
 
 
 /*
-    * Load carriers.csv for delaysByCarrier visualization
+    * Load carrier_delays.csv for delaysByCarrier visualization
 */
 
-    d3.csv("data/carriers.csv", row => {
+    d3.csv("data/carrier_delays.csv", row => {
         row.carrier_delay = +row.carrier_delay;
         row.late_aircraft_delay = +row.late_aircraft_delay;
         row.nas_delay = +row.nas_delay;
@@ -101,10 +101,10 @@ Promise.all([
 
 
 /*
-    * Load Airline_Delay_Cause again for month-wise and arrivals vs. delay visualizations
+    * Load delay_causes.csv again for month-wise and arrivals vs. delay visualizations
 */
 
-    d3.csv("data/Airline_Delay_Cause.csv", row => {
+    d3.csv("data/delay_causes.csv", row => {
         row.year  = parseDate(row.year);
         row.month = +row.month;
         row.arr_flights = +row.arr_flights;
@@ -131,7 +131,7 @@ Promise.all([
 
 
 /*
-    * Load avg_delays.csv and hist.csv for delayDist visualization
+    * Load avg_delays.csv and histogram_data.csv for delayDist visualization
 */
 
     Promise.all([
@@ -141,7 +141,7 @@ Promise.all([
             row.avg_delay = +row.avg_delay;
             return row;
         }),
-        d3.csv("data/hist.csv", row => {
+        d3.csv("data/histogram_data.csv", row => {
             row.count = +row.count;
             return row;
         })

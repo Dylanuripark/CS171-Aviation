@@ -163,7 +163,7 @@ class delayDist {
         // Use iataToName to display names instead of codes
         vis.allAirports.forEach(iata => {
             let name = vis.iataToName.get(iata) || iata;
-            airportSelect.append("option").attr("value", iata).text(name);
+            airportSelect.append("option").attr("value", iata).text(name + " (" + iata + ")");
         });
 
         vis.allAirlines.forEach(airline => {
@@ -235,7 +235,7 @@ class delayDist {
             airportSelect.selectAll("option:not([value='all'])").remove();
             availableAirports.forEach(iata => {
                 let name = vis.iataToName.get(iata) || iata;
-                airportSelect.append("option").attr("value", iata).text(name);
+                airportSelect.append("option").attr("value", iata).text(name + " (" + iata + ")");
             });
             if (selectedAirport !== "all" && !availableAirports.includes(selectedAirport)) {
                 airportSelect.property("value", "all");

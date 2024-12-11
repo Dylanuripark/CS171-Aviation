@@ -12,6 +12,20 @@ body {
     font-family: Doto;
 }
 
+.data-story {
+    font-family: Roboto Mono;
+    font-weight: 300;
+}
+
+a {
+    color: #e4b45e;
+}
+
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
 .legend {
     display: flex;
     align-items: center;
@@ -41,6 +55,7 @@ body {
     border-radius: 8px;
     pointer-events: none;
     color: black;
+    font-weight: 600;
 }
 
 .tooltip strong {
@@ -83,7 +98,7 @@ body {
     padding: 8px;
     font-size: 14px;
     font-family: Doto;
-    background: rgba(255, 255, 255, 0.9); /* Adjust as needed */
+    background: rgba(255, 255, 255, 0.95); /* Adjust as needed */
     border: 1px solid #ccc;
     border-radius: 8px;
     pointer-events: none;

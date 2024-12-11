@@ -12,40 +12,45 @@
     <link rel="stylesheet" type="text/css" href="css/fullpage.css">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
     </style>
 </head>
 <body>
 
 <div id="fullpage">
-    <div class="section active" id="section0" style="background-image: url(img/delay_img.jpg)">
-        <div class="row" style="background-color: rgb(150, 0, 0, 0.9);">
+    <div class="section active" data-anchor="intro" style="background-image: url(img/delay_img.jpg)">
+        <div class="row" style="background-color: rgb(255, 255, 255, 0.95);">
             <div class="col text-center justify-content-center align-items-center">
                 <div class="row">
-                    <h1 style="margin-bottom: 0; line-height: 15vh;"><b>The Wide World of Delayed Flights</b></h1>
-                    <p><i>a CS 1710 final project by</i></p>
-                    <h5 style="margin-bottom: 5vh;">Dylan Park, Paurakh Rijal, and Pranay Varada</h5>
+                    <h1 style="margin-top:4vh; color: rgb(150, 0, 0, 1); font-weight: 800;"><b>DELAYED GRATIFICATION</b></h1>
+                    <h4 style="margin-bottom: 4vh; color: black"><b>A deep dive into U.S. flight delays</b></h4>
+                    <p style="margin-bottom: 1vh; color: black; font-weight: 600;"><i>a CS 1710 final project by</i></p>
+                    <h5 style="margin-bottom: 4vh; color: rgb(150, 0, 0, 1); font-weight: 800;">Dylan Park, Paurakh Rijal, and Pranay Varada</h5>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="section" id="section0-text">
+    <div class="section data-story" data-anchor="intro-text">
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-10" style="font-family: Helvetica">
-                <p>Every year, millions of travelers face unexpected flight delays, disrupting plans and causing significant frustration. But what are the underlying factors driving these delays? By delving into data from America's busiest airports and leading airlines, this project uncovers the patterns and causes behind flight disruptions. Join us as we explore which airports and carriers are most affected, and gain insights into improving the efficiency and reliability of air travel across the United States.</p>
+            <div class="col-md-10">
+                <p>Every year, millions of travelers face unexpected flight delays, disrupting plans and causing significant frustration. But where are these delays happening, and why? We looked at arrival delay data from the <a href=”https://www.transtats.bts.gov/databases.asp?Z1qr_VQ=E&Z1qr_Qr5p=N8vn6v10&f7owrp6_VQF=D”>Bureau of Transportation Statistics</a> to find out.</p>
+                <p>Scroll through this interactive story to discover which airports and carriers are most affected by delays, and how likely you might be to experience a delay on your next flight.</p>
+                <p>To begin, here’s a map of every major airport in the United States. Hover over an airport to see its number of flights and average arrival delay.</p>
+                <p style="font-size: 0.8em;">*Note that all of the delays in this story refer specifically to arrival delays: the difference between the time a flight arrives at an airport and when it was scheduled to arrive.</p>
             </div>
             <div class="col-md-1"></div>
         </div>
     </div>
 
-    <div class="section" id="section1">
+    <div class="section" data-anchor="map">
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-7">
-                <h2>The Airports of the Americas</h2>
-                <h5>The busiest and most delayed airports in America</h5>
+            <div class="col-md-10">
+                <h2>(De)lay of the land: where U.S. airport delays occur</h2>
+                <h5>Airports sized by average arrival delay</h5>
+                <p>Most delayed airports and busiest airports highlighted</p>
             </div>
             <div class="col-md-1"></div>
         </div>
@@ -53,30 +58,34 @@
         <!--Space for first map-->
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-8">
-                <div id="flightMap"></div>
+            <div class="col-md-10">
+                <div id="flightMap" style="height: 65vh;"></div>
             </div>
             <div class="col-md-1"></div>
         </div>
 
     </div>
 
-    <div class="section" id="section1-text">
+    <div class="section data-story" data-anchor="map-text">
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-10" style="font-family: Helvetica">
-                <p></p>
+            <div class="col-md-10">
+                <p>The U.S.’s most delayed airports are in some unexpected places: Provo, Utah; Santa Maria, California; and Joplin, Missouri, among others.
+                    All three of those airports see average delays of over 25 minutes.
+                    Of the country’s busiest airports, Orlando International and New York’s John F. Kennedy International are among the most delayed, with average arrival delays of nearly 20 minutes.
+                    Meanwhile, the world's busiest airport, Hartsfield-Jackson Atlanta International, does a pretty good job of managing delays – just 12.5 minutes on average.</p>
+                <p>But how much of these delays are the airport’s fault, and how much is the fault of the airline? Find out how different carriers perform in the graph below.</p>
             </div>
             <div class="col-md-1"></div>
         </div>
     </div>
 
     <!--Delays by Carrier-->
-    <div class="section" id="section2">
+    <div class="section" data-anchor="carrier-plot">
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <h2>Delays come in many forms</h2>
+                <h2>Why your flight is late</h2>
                 <h5>How America's top airlines compare in the reasons for their delays</h5>
                 <div class="legend">
                     <p class="legend-var" style="margin-right: 20px">Reason for delay</p>
@@ -104,10 +113,10 @@
 
     </div>
 
-    <div class="section" id="section3">
+    <div class="section data-story" data-anchor="carrier-plot-text">
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-10" style="font-family: Helvetica">
+            <div class="col-md-10">
                 <p>The plot above details carriers’ arrival delay performance, segmented by cause:</p>
                 <ul>
                     <li>Carrier delay (a delay under the carrier’s control, such as maintenance or loading baggage);</li>
@@ -133,7 +142,7 @@
         </div>
     </div>
 
-    <div class="section" id="section4">
+    <div class="section" data-anchor="jetblue-plot">
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
@@ -179,10 +188,10 @@
     </div>
 
     <!--Main Message-->
-    <div class="section" id="section5">
+    <div class="section data-story" data-anchor="jetblue-plot-text">
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-10" style="font-family: Helvetica">
+            <div class="col-md-10">
                 <p>So if you’re flying JetBlue anytime soon, you might want to be a little bit wary of possible delays!</p>
                 <p>Speaking of upcoming flights, though – should you expect longer delays during the holiday season, no matter what airline you’re flying? This next graph shows the breakdown of arrival delays during each month in 2023.</p>
             </div>
@@ -190,11 +199,12 @@
         </div>
     </div>
 
-    <div class="section" id="section6">
+    <div class="section" data-anchor="month-plot">
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
                 <h2>How delays change by the months</h2>
+                <h5>Winter might actually be the best time to fly</h5>
                 <div class="legend">
                     <div class="square" style="background-color: #DCA11D; margin-left: 0;"></div>
                     <p class="legend-var">Carrier</p>
@@ -205,45 +215,47 @@
                     <div class="square" style="background-color: #f2dab2"></div>
                     <p class="legend-var">Weather</p>
                 </div>
-                <div class="row" id="delaybyMonths"></div>
+                <div id="delaybyMonths"></div>
             </div>
             <div class="col-md-1"></div>
         </div>
     </div>
 
-    <div class="section" id="section6-text">
+    <div class="section data-story" data-anchor="month-plot-text">
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-10" style="font-family: Helvetica">
-                <p></p>
+            <div class="col-md-10">
+                <p>Surprisingly, delays are actually at their lowest in November and December! It turns out that despite the perception of the busy holiday season, there are more flights and more people flying in the summer months, especially in June or July, which can contribute to delays. Extreme weather also isn’t a huge factor – it’s how airports and airlines react to it. Summer weather events, whether heat waves or hurricanes, can pose just as big a problem as snow, if not bigger, for flight delays.<p>
+                <p>Below, check out how flight volume could be affecting delay times.</p>
             </div>
             <div class="col-md-1"></div>
         </div>
     </div>
 
-    <div class="section" id="section7">
+    <div class="section" data-anchor="traffic-plot">
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
                 <h2>Does flight traffic affect delays?</h2>
+                <h5>The answer: potentially!</h5>
                 <div class="legend">
                     <div class="square" style="background-color: orange; opacity: 0.8; margin-left: 0;"></div>
                     <p class="legend-var">Total flights</p>
                     <div class="square" style="background-color: indianred; opacity: 0.8"></div>
                     <p class="legend-var">Average Delay (min)</p>
                 </div>
-                <div class="row" id="arrivalDelayvsArrivals"></div>
+                <div id="arrivalDelayvsArrivals"></div>
             </div>
             <div class="col-md-1"></div>
         </div>
     </div>
 
-    <div class="section" id="section8">
+    <div class="section data-story" data-anchor="traffic-plot-text">
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <h4 style="margin-bottom: 1vh">Analysis</h4>
-                <p>Delays seem to be the most common in the summer months when travel is at its peak. Although not a period that is particularly known for debilitating weather, it is interesting to note that the average weather delay time also went up in these months.</p>
+                <p>July and August see the most flights, with around 640,000 per month. That’s about 7% higher than November and December. January and February, meanwhile, see the fewest flights. Interestingly, despite the fact that there’s only a slight decline in the number of flights towards the end of the year, delays drop way down – they basically halve from summer to late fall. Perhaps with airports running at full capacity, a 7% drop in flights can make all the difference in the world.</p>
+                <p>Now, it’s your turn! In the interactive visualization below, select any combination of airport and airline, and find out how long the average arrival delay is at your next destination.</p>
             </div>
             <div class="col-md-1"></div>
         </div>
@@ -251,12 +263,12 @@
 
     <!--How long flight will be delayed-->
 
-    <div class="section" id="section9">
+    <div class="section" data-anchor="expectation-plot">
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
                 <h2>How much can you expect to be delayed?</h2>
-                <h5>See how the average delay of any combination of airport and airline compares to the overall distribution</h5>
+                <h5>See how the average delay of your chosen airport and airline compares to the overall distribution of delays</h5>
             </div>
             <div class="col-md-1"></div>
         </div>
@@ -285,28 +297,15 @@
         </div>
     </div>
 
-    <div class="section" id="section10">
+    <div class="section data-story" data-anchor="conclusion">
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <h4>Analysis</h4>
-                <p>Placeholder for future discussion.</p>
+                <p>Hopefully, you’re coming out of this article with the tools to avoid getting delayed on your next flight. It doesn’t necessarily matter how big the airport you’re flying into is: delays can come about because of the weather at your destination, how airports and airlines deal with those complexities, and which airline that airport is a hub for. You might want to avoid flying into smaller, regional airports where weather or staffing could be an issue, or on low-cost airlines like JetBlue that seem to be more responsible for delays. Of course, there are always exceptions – Southwest flights don’t get delayed very long on average. But these are just a few things to take into consideration when planning your next trip.</p>
+                <p>Just don’t fly JetBlue to Provo. (You can’t actually do that, but it’s worth mentioning regardless.)</p>
+                <p>Thanks for reading!</p>
             </div>
             <div class="col-md-1"></div>
-        </div>
-    </div>
-
-    <!--To avoid delays ____-->
-    <div class="section" id="section11">
-        <div class="row">
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-10">
-                <h4>Paragraph: How to avoid delays</h4>
-                <p>Adding conclusion and potential final info here</p>
-            </div>
-            <div class="col-md-1">
-            </div>
         </div>
     </div>
 </div>
@@ -335,11 +334,12 @@
         navigationPosition: 'right',
         autoScrolling:true,
         fitToSection: true,
-        scrollOverflow: true,
+        scrollOverflow: false,
         normalScrollElements: '#flightMap',
         touchSensitivity:15,
-        anchors:['page1','page2','page3','page4','page5','page6','page7','page8','page9','page10', 'page11', 'page12', 'page13', 'page14', 'page15'],
-        navigationTooltips: ['1','2','3','4','5','6','7','8','9','10', '11', '12', '13', '14', '15'],
+        anchors:['intro', 'intro-text', 'map', 'map-text', 'carrier-plot', 'carrier-plot-text', 'jetblue-plot',
+            'jetblue-plot-text', 'month-plot', 'month-plot-text', 'traffic-plot', 'traffic-plot-text', 'expectation-plot', 'conclusion'],
+        navigationTooltips: ['1','2','3','4','5','6','7','8','9','10', '11', '12', '13', '14'],
         showActiveTooltip: true,
     });
 </script>
