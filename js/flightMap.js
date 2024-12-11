@@ -1,41 +1,64 @@
-// flightMap.js
+/*
+* flightMap.js
+* Renders a map of airports within the United States, highlighting the top 10 busiest and most delayed airports,
+* as well as displaying delay cause distributions in a tooltip.
+* @param parentContainer   -- the HTML element in which to draw the visualization (e.g. a div)
+* @param airportData        -- array of airport objects with {airport, airport_name, latitude, longitude, total_arr_flights, avg_delay}
+* @param usMapData          -- GeoJSON data for drawing the US map
+* @param delayCausesData    -- array of objects containing aggregated delay cause information by airport
+*/
+
 class FlightsMap {
-    constructor(parentContainer, airportData, usMapData) {
+
+
+
+    constructor(parentContainer, airportData, usMapData, delayCausesData) {
         this.parentContainer = parentContainer;
         this.airportData = airportData;
         this.usMapData = usMapData;
+        this.delayCausesData = delayCausesData;
         this.initVis();
     }
 
+
+/*
+    * Initialize visualization (static content like SVG area, axes)
+*/
+
     initVis() {
         let vis = this;
-
         let container = document.getElementById(vis.parentContainer);
         let size = container.getBoundingClientRect();
 
+        // Margin and size settings (can adjust values below)
         vis.margin = { top: 20, right: 20, bottom: 20, left: 20 };
         vis.width = size.width - vis.margin.left - vis.margin.right;
         vis.height = 500 - vis.margin.top - vis.margin.bottom;
 
-        vis.svg = d3.select("#" + vis.parentContainer).append("svg")
+        // Create main SVG group
+        vis.svg = d3.select("#" + vis.parentContainer)
+            .append("svg")
             .attr("width", vis.width + vis.margin.left + vis.margin.right)
             .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
             .append("g")
             .attr("transform", `translate(${vis.margin.left},${vis.margin.top})`);
 
+        // Projection and path for US map
         vis.projection = d3.geoAlbersUsa()
             .translate([vis.width / 2, vis.height / 2])
             .scale(vis.width * 0.8);
-
         vis.path = d3.geoPath().projection(vis.projection);
 
+        // Groups for map and airports
         vis.mapG = vis.svg.append("g");
         vis.airportsG = vis.svg.append("g");
 
+        // Tooltip div (hidden by default)
         vis.tooltip = d3.select("body").append("div")
             .attr("class", "tooltip")
             .style("opacity", 0);
 
+        // Zoom behavior
         vis.zoom = d3.zoom().scaleExtent([1, 8])
             .on('zoom', (event) => {
                 vis.mapG.attr('transform', event.transform);
@@ -44,31 +67,30 @@ class FlightsMap {
                 let k = event.transform.k;
                 vis.airportsG.selectAll("circle")
                     .attr("r", d => {
-                        let baseR = 3;
-                        if (this.delayedIATAs && this.delayedIATAs.has(d.iata)) {
-                            baseR = this.delaySizeScale(d.avg_delay);
-                        } else if (this.busiestIATAs && this.busiestIATAs.has(d.iata)) {
-                            baseR = this.sizeScale(d.total_operations);
-                        }
-                        return baseR / k;
+                        // Recompute radius on zoom
+                        let radius = vis.getAirportRadius(d);
+                        return radius / k;
                     });
             });
 
         vis.svg.call(vis.zoom);
-        vis.updateVis();
 
-        // **Attach event listener to the airport type dropdown**
-        d3.select("#airportTypeSelect").on("change", function() {
-            vis.updateVis();
-        });
+        this.updateVis();
     }
+
+
+/*
+    * Update visualization (e.g., filter data, draw elements)
+*/
 
     updateVis() {
         let vis = this;
 
+        // Clear previous elements
         vis.mapG.selectAll("*").remove();
         vis.airportsG.selectAll("*").remove();
 
+        // Draw US map
         vis.mapG.selectAll("path")
             .data(vis.usMapData.features)
             .enter().append("path")
@@ -76,105 +98,84 @@ class FlightsMap {
             .attr("fill", "#e0e0e0")
             .attr("stroke", "#ffffff");
 
-        // Identify top busiest
-        vis.busiestAirports = vis.airportData
-            .filter(d => d.total_operations)
-            .sort((a, b) => b.total_operations - a.total_operations)
-            .slice(0, 10);
-        vis.busiestIATAs = new Set(vis.busiestAirports.map(d => d.iata));
+        // Filter airports with valid coordinates
+        let validAirports = vis.airportData.filter(d => d.latitude != null && d.longitude != null);
 
-        if (vis.busiestAirports.length >= 10) {
-            vis.sizeScale = d3.scaleLinear()
-                .domain([vis.busiestAirports[9].total_operations, vis.busiestAirports[0].total_operations])
-                .range([5, 25]);
-        } else if (vis.busiestAirports.length > 0) {
-            let minOps = d3.min(vis.busiestAirports, d => d.total_operations);
-            let maxOps = d3.max(vis.busiestAirports, d => d.total_operations);
-            vis.sizeScale = d3.scaleLinear().domain([minOps, maxOps]).range([5,25]);
+        // Sort and select top 10 busiest (by total_arr_flights)
+        let sortedByFlights = validAirports.slice().sort((a,b) => b.total_arr_flights - a.total_arr_flights);
+        let busiest = sortedByFlights.slice(0,10);
+
+        // Sort and select top 10 delayed (by avg_delay)
+        let sortedByDelay = validAirports.slice().sort((a,b) => b.avg_delay - a.avg_delay);
+        let delayed = sortedByDelay.slice(0,10);
+
+        // Logging top airports for debugging
+        console.log("Top 10 Busiest Airports:", busiest);
+        console.log("Top 10 Delayed Airports:", delayed);
+
+        // Store sets for easy membership checking
+        vis.busiestAirports = new Set(busiest.map(d => d.airport));
+        vis.delayedAirports = new Set(delayed.map(d => d.airport));
+
+        // Create scales for radius (change range values if desired)
+        if (busiest.length > 0) {
+            let minFlights = d3.min(busiest, d => d.total_arr_flights);
+            let maxFlights = d3.max(busiest, d => d.total_arr_flights);
+            vis.busyScale = d3.scaleLinear().domain([minFlights, maxFlights]).range([5,20]);
         } else {
-            vis.sizeScale = d3.scaleLinear().domain([0,1]).range([5,5]);
+            vis.busyScale = d3.scaleLinear().domain([0,1]).range([5,5]);
         }
 
-        // Identify top delayed
-        vis.mostDelayedAirports = vis.airportData
-            .filter(d => d.avg_delay && d.avg_delay > 0)
-            .sort((a, b) => b.avg_delay - a.avg_delay)
-            .slice(0, 10);
-        vis.delayedIATAs = new Set(vis.mostDelayedAirports.map(d => d.iata));
-
-        if (vis.mostDelayedAirports.length > 0) {
-            let minDelay = d3.min(vis.mostDelayedAirports, d => d.avg_delay);
-            let maxDelay = d3.max(vis.mostDelayedAirports, d => d.avg_delay);
-            vis.delaySizeScale = d3.scaleLinear()
-                .domain([minDelay, maxDelay])
-                .range([5, 25]);
+        if (delayed.length > 0) {
+            let minDelay = d3.min(delayed, d => d.avg_delay);
+            let maxDelay = d3.max(delayed, d => d.avg_delay);
+            vis.delayScale = d3.scaleLinear().domain([minDelay, maxDelay]).range([5,20]);
         } else {
-            vis.delaySizeScale = d3.scaleLinear().domain([0,1]).range([5,5]);
+            vis.delayScale = d3.scaleLinear().domain([0,1]).range([5,5]);
         }
 
-        let selectedType = d3.select("#airportTypeSelect").property("value");
-        let filteredData = vis.airportData.filter(d => {
-            if (selectedType === "All") return true;
-            if (selectedType === "International") return d.flight_category === "International";
-            if (selectedType === "Domestic") return d.flight_category === "Domestic";
-            if (selectedType === "Other") return d.flight_category === "Other";
-        });
-
-        vis.airportsG.selectAll("circle")
-            .data(filteredData)
+        // Plot all valid airports
+        let circles = vis.airportsG.selectAll("circle")
+            .data(validAirports)
             .enter().append("circle")
-            .attr("cx", d => {
-                if (d.longitude == null || d.latitude == null) return 0;
-                let coords = vis.projection([d.longitude, d.latitude]);
-                return coords ? coords[0] : 0;
+            .each(function(d) {
+                let coords = vis.projection([+d.longitude, +d.latitude]);
+                d._x = coords ? coords[0] : null;
+                d._y = coords ? coords[1] : null;
             })
-            .attr("cy", d => {
-                if (d.longitude == null || d.latitude == null) return 0;
-                let coords = vis.projection([d.longitude, d.latitude]);
-                return coords ? coords[1] : 0;
-            })
-            .attr("r", d => {
-                if (vis.delayedIATAs.has(d.iata)) {
-                    return vis.delaySizeScale(d.avg_delay);
-                } else if (vis.busiestIATAs.has(d.iata)) {
-                    return vis.sizeScale(d.total_operations);
-                } else {
-                    return 3;
-                }
-            })
-            .attr("fill", d => {
-                if (vis.delayedIATAs.has(d.iata)) {
-                    return "red";
-                } else if (vis.busiestIATAs.has(d.iata)) {
-                    return "orange";
-                } else if (d.flight_category === "International") {
-                    return "blue";
-                } else {
-                    return "rgba(255, 255, 255, 0.5)";
-                }
-            })
-            .attr("stroke", "black")
-            .attr("opacity", 0.7)
-            .on("mouseover", function(event, d) {
-                d3.select(this).attr("stroke-width", 2);
+            .filter(d => d._x != null && d._y != null);
 
-                // Build inline delay causes chart
-                let chartHTML = vis.getDelayCausesChart(d.iata);
+        circles
+            .attr("cx", d => d._x)
+            .attr("cy", d => d._y)
+            .attr("r", d => vis.getAirportRadius(d))
+            .attr("fill", d => vis.getAirportColor(d))
+            .attr("stroke", "black")
+            .attr("stroke-width", d => (vis.delayedAirports.has(d.airport) || vis.busiestAirports.has(d.airport)) ? 2 : 1)
+            .on("mouseover", function(event, d) {
+                d3.select(this).attr("stroke-width", 3);
+
+                let extraLabel = "";
+                let isDelayed = vis.delayedAirports.has(d.airport);
+                let isBusiest = vis.busiestAirports.has(d.airport);
+                if (isDelayed && isBusiest) extraLabel += "<br><b>Top Delayed & Busiest Airport</b>";
+                else if (isDelayed) extraLabel += "<br><b>Top Delayed Airport</b>";
+                else if (isBusiest) extraLabel += "<br><b>Top Busiest Airport</b>";
+
+                let chartHTML = vis.getDelayCausesChart(d.airport);
 
                 vis.tooltip.transition().duration(200).style("opacity", 0.95);
                 vis.tooltip.html(`
-                    <strong>${d.name} (${d.iata})</strong><br/>
-                    ${d.city}, ${d.state}<br/>
-                    Total Operations: ${d3.format(",")(d.total_operations)}<br/>
-                    Average Delay: ${d.avg_delay ? d.avg_delay.toFixed(2) + ' mins' : 'N/A'}<br/>
-                    Airport Type: ${d.flight_category}<br/><br/>
+                    <strong>${d.airport_name} (${d.airport})</strong><br/>
+                    Total Arrivals: ${d3.format(",")(d.total_arr_flights)}<br/>
+                    Average Delay: ${d.avg_delay ? d.avg_delay.toFixed(2) + ' mins' : 'N/A'}${extraLabel}<br/><br/>
                     ${chartHTML}
                 `)
                     .style("left", (event.pageX + 10) + "px")
                     .style("top", (event.pageY - 28) + "px");
             })
             .on("mouseout", function(event, d) {
-                d3.select(this).attr("stroke-width", 1);
+                d3.select(this).attr("stroke-width", (vis.delayedAirports.has(d.airport) || vis.busiestAirports.has(d.airport)) ? 2 : 1);
                 vis.tooltip.transition().duration(500).style("opacity", 0);
             });
 
@@ -182,9 +183,45 @@ class FlightsMap {
         vis.createLegend();
     }
 
-    /*
-     * Create Legend
-     */
+
+/*
+    * Return the appropriate color for an airport based on its membership in top sets
+*/
+
+    getAirportColor(d) {
+        let isDelayed = this.delayedAirports.has(d.airport);
+        let isBusiest = this.busiestAirports.has(d.airport);
+        if (isDelayed && isBusiest) return "#BB29BB";
+        if (isDelayed) return "red";
+        if (isBusiest) return "orange";
+        return "rgba(255, 255, 255, 0.5)";
+    }
+
+
+/*
+    * Compute radius of the airport circle based on whether it's in top 10 delayed or busiest
+*/
+
+    getAirportRadius(d) {
+        let isDelayed = this.delayedAirports.has(d.airport);
+        let isBusiest = this.busiestAirports.has(d.airport);
+
+        let radius = 3;
+        if (isDelayed && this.delayScale) {
+            radius = Math.max(radius, this.delayScale(d.avg_delay));
+        }
+        if (isBusiest && this.busyScale) {
+            radius = Math.max(radius, this.busyScale(d.total_arr_flights));
+        }
+
+        return radius;
+    }
+
+
+/*
+    * Create legend to explain circle colors and sizes
+*/
+
     createLegend() {
         let vis = this;
 
@@ -193,9 +230,9 @@ class FlightsMap {
             .attr("transform", `translate(${vis.width - 200}, ${vis.height - 150})`);
 
         let legendData = [
-            { color: "orange", label: "Top 10 Busiest Airports", size: 10 },
-            { color: "red", label: "Top 10 Most Delayed Airports", size: 10 },
-            { color: "blue", label: "International Airports", size: 3 },
+            { color: "#BB29BB", label: "Top 10 Delayed & Busiest", size: 10 },
+            { color: "red", label: "Top 10 Delayed", size: 10 },
+            { color: "orange", label: "Top 10 Busiest", size: 10 },
             { color: "rgba(255, 255, 255, 0.5)", label: "Other Airports", size: 3 }
         ];
 
@@ -205,7 +242,7 @@ class FlightsMap {
             .append("g")
             .attr("class", "legend-item")
             .attr("transform", (d, i) => `translate(0, ${i * 25})`)
-            .each(function (d) {
+            .each(function(d) {
                 let legendItem = d3.select(this);
                 legendItem.append("circle")
                     .attr("cx", 10)
@@ -223,12 +260,18 @@ class FlightsMap {
             });
     }
 
-    /*
-     * Get Delay Causes Chart (as an inline SVG string)
-     */
-    getDelayCausesChart(iata) {
-        // Access global delayCausesData loaded in main.js
-        let airportData = window.delayCausesData.filter(d => d.airport === iata);
+
+/*
+    * Build a small pie chart SVG inline for the tooltip to show delay cause breakdown
+* @param airportCode   -- the iata code of the selected airport
+*/
+
+    getDelayCausesChart(airportCode) {
+        if (!this.delayCausesData) {
+            return "<i>No delay cause data</i>";
+        }
+
+        let airportData = this.delayCausesData.filter(d => d.airport === airportCode);
         if (airportData.length === 0) {
             return "<i>No delay cause data</i>";
         }
@@ -245,7 +288,7 @@ class FlightsMap {
             { cause: "NAS", value: totalNAS },
             { cause: "Security", value: totalSecurity },
             { cause: "Late Aircraft", value: totalLate }
-        ].filter(d => d.value > 0);
+        ].filter(dd => dd.value > 0);
 
         if (delayCauses.length === 0) {
             return "<i>No delay cause data</i>";
@@ -262,7 +305,6 @@ class FlightsMap {
         let arc = d3.arc().innerRadius(0).outerRadius(radius);
         let arcs = pie(delayCauses);
 
-        // Create inline SVG as a string
         let svgParts = [];
         svgParts.push(`<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">`);
         svgParts.push(`<g transform="translate(${width/2},${height/2})">`);
@@ -275,8 +317,6 @@ class FlightsMap {
 
         svgParts.push(`</g></svg>`);
 
-        // Add a small legend inline
-        // We'll just list causes and values below the chart
         svgParts.push(`<div style="font-size:10px; margin-top:5px;">`);
         delayCauses.forEach(c => {
             svgParts.push(`<div><span style="display:inline-block;width:10px;height:10px;background:${colorScale(c.cause)};margin-right:5px;"></span>${c.cause}: ${c.value}</div>`);
