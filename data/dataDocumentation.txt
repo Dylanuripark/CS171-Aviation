@@ -1,0 +1,38 @@
+In avg_delays.csv:
+airport: the IATA airport code
+airport_name: The location and full name of the airport
+carrier_name: name of airline
+arr_delay: minutes difference between estimated arrival and actual arrival
+arr_flights: number of flights total
+avg_delay: arr_delay over arr_flights
+
+In carrier_delays.csv:
+carrier_name: name of airline
+name: type of delay
+value:
+pos:
+
+In delay_causes.csv
+year: year of data collection
+month: month of data collection
+carrier: airline code
+carrier_name: name of airline
+airport: the IATA airport code
+airport_name: The location and full name of the airport
+arr_flights: number of flights total
+arr_del15: number of flights delayed 15 minutes or more
+carrier_ct: number of flights delayed due to carrier delays
+weather_ct: number of flights delayed due to weather delays
+nas_ct: number of flights delayed due to NAS (non-extreme weather conditions, airport operations, heavy traffic volume, air traffic control, etc) delays
+security_ct: number of flights delayed due to security delays
+late_aircraft_ct: number of flights delayed due to late aircraft delays
+arr_cancelled: number of cancelled flights
+arr_diverted: number of diverted flights
+arr_delay: minutes difference between estimated arrival and actual arrival
+carrier_delay: minutes of delay attributed to carrier delays
+weather_delay: minutes of delay attributed to weather delays
+nas_delay: minutes of delay attributed to NAS delays
+security_delays: minutes of delay attributed to security delays
+late_aircraft_delay: minutes of delay attributed to late aircraft delays
+
+
