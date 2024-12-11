@@ -9,8 +9,8 @@ avg_delay: arr_delay over arr_flights
 In carrier_delays.csv:
 carrier_name: name of airline
 name: type of delay
-value:
-pos:
+value: number of minutes
+pos: x-value the data should be at for plotting purposes
 
 In delay_causes.csv
 year: year of data collection
