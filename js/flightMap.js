@@ -322,7 +322,7 @@ class FlightsMap {
 
         svgParts.push(`<div style="font-size:10px; margin-top:10px;">`);
         delayCauses.forEach(c => {
-            svgParts.push(`<div><span style="display:inline-block;width:10px;height:10px;background:${colorScale(c.cause)};margin-right:5px;"></span>${c.cause}: ${c.value}</div>`);
+            svgParts.push(`<div><span style="display:inline-block;width:10px;height:10px;background:${colorScale(c.cause)};margin-right:5px;"></span>${c.cause}: ${d3.format(",")(c.value)} total min delay</div>`);
         });
         svgParts.push(`</div>`);
 
