@@ -69,3 +69,6 @@ arr_flights: number of flights total
 avg_delay: arr_delay over arr_flights
 longitude: longitude for map plot
 latitude: latitude for map plot
+
+In us-states.json:
+Geojson data for the map
