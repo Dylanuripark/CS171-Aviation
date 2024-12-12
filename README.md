@@ -1,13 +1,13 @@
 # CS171-Aviation
 
 ## Webpage
-[url]
+https://www.pranayvarada.com/projects/delayed-gratification/
 
 ## Screencast Overview
-[url]
+https://drive.google.com/file/d/1PL4_76wRmZ0SW6jP5GFXgjJckI_QbTvr/view?usp=share_link
 
 ## Repo Breakdown
-### style
+### css
 Contains the css style information for the webpage. styles.css is our code and fullpage.css is from a library
 ### data
 Contains the aviation data as well as the Geojson data for the visualizations. Some of the data is duplicated and reformatted through R for ease of use.
